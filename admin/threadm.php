@@ -272,7 +272,7 @@ $st = ($_GET['page'] - 1) * $thread;
 <b>スレッド移動</b>はスレッドをHTML化して過去ログディレクトリに移動します。<br>
 <br>
 page：<?=$_GET['page']?><br>
-<?
+<?php
 $total = count($PAGEFILE) + $thread - 1;
 $total_page = (int)($total/$thread);
 for ($i = 1; $i <= $total_page; $i++) {

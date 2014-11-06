@@ -70,7 +70,7 @@ if(isset($_GET['mode']) and $_GET['mode'] == "log_del") {
 <input type="hidden" name="bbs" value="<?=$_GET['bbs']?>">
 <input type="hidden" name="mode" value="log_del">
 <input type="submit" value="削除">
-<?
+<?php
 if (!isset($_GET['page']) or !$_GET['page']) $_GET['page'] = 1;
 echo "page：$_GET[page]<br>\n";
 $st = ($_GET['page'] - 1) * $inum;
@@ -111,7 +111,7 @@ for ($i = $st; $i < $st + $inum; $i++) {
 <tr>
 <td><?=$comment?> </td><td><?=$host?> (<?=$ipaddr?>)</td>
 </tr>
-<?
+<?php
 }
 ?>
 </table>
@@ -125,6 +125,6 @@ for ($i = 1; $i <= $total_page; $i++) {
 <input type="submit" value="削除">
 </form>
 </body></html>
-<?
+<?php
 exit;
 ?>

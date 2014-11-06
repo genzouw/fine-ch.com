@@ -130,14 +130,14 @@ $maxmsg = str_replace('<br>', "\n", THREAD_MAX_MSG);
 </tr>
 <tr>
 <th>画像アップロード</th>
-<td><input type="radio" name="UPLOAD" value="1"<? if (UPLOAD) echo " checked"?>>あり　<input type="radio" name="UPLOAD" value="0"<? if (!UPLOAD) echo " checked"?>>なし</td>
+<td><input type="radio" name="UPLOAD" value="1"<?php if (UPLOAD) echo " checked"?>>あり　<input type="radio" name="UPLOAD" value="0"<?php if (!UPLOAD) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>サムネイル作成</th>
 <td><font size=2>
-<input type="radio" name="GD_VERSION" value="0"<? if (GD_VERSION == 0) echo " checked"?>>なし |
-<input type="radio" name="GD_VERSION" value="1"<? if (GD_VERSION == 1) echo " checked"?>>あり(GD Ver.1) |
-<input type="radio" name="GD_VERSION" value="2"<? if (GD_VERSION == 2) echo " checked"?>>あり(GD Ver.2)
+<input type="radio" name="GD_VERSION" value="0"<?php if (GD_VERSION == 0) echo " checked"?>>なし |
+<input type="radio" name="GD_VERSION" value="1"<?php if (GD_VERSION == 1) echo " checked"?>>あり(GD Ver.1) |
+<input type="radio" name="GD_VERSION" value="2"<?php if (GD_VERSION == 2) echo " checked"?>>あり(GD Ver.2)
 </font></td>
 </tr>
 <tr>
@@ -157,62 +157,62 @@ VIP機能<br>
 <table border="2">
 <tr>
 <th>おみくじ機能</th>
-<td><input type="radio" name="OMIKUJI" value="1"<? if (OMIKUJI) echo " checked"?>>あり　<input type="radio" name="OMIKUJI" value="0"<? if (!OMIKUJI) echo " checked"?>>なし</td>
+<td><input type="radio" name="OMIKUJI" value="1"<?php if (OMIKUJI) echo " checked"?>>あり　<input type="radio" name="OMIKUJI" value="0"<?php if (!OMIKUJI) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>野球機能</th>
-<td><input type="radio" name="BASEBALL" value="1"<? if (BASEBALL) echo " checked"?>>あり　<input type="radio" name="BASEBALL" value="0"<? if (!BASEBALL) echo " checked"?>>なし</td>
+<td><input type="radio" name="BASEBALL" value="1"<?php if (BASEBALL) echo " checked"?>>あり　<input type="radio" name="BASEBALL" value="0"<?php if (!BASEBALL) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>誰がどこで機能</th>
-<td><input type="radio" name="WHO_WHERE" value="1"<? if (WHO_WHERE) echo " checked"?>>あり　<input type="radio" name="WHO_WHERE" value="0"<? if (!WHO_WHERE) echo " checked"?>>なし</td>
+<td><input type="radio" name="WHO_WHERE" value="1"<?php if (WHO_WHERE) echo " checked"?>>あり　<input type="radio" name="WHO_WHERE" value="0"<?php if (!WHO_WHERE) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>壷機能（もってないので未実装）</th>
-<td><input type="radio" name="TUBO" value="1"<? if (TUBO) echo " checked"?>>あり　<input type="radio" name="TUBO" value="0"<? if (!TUBO) echo " checked"?>>なし</td>
+<td><input type="radio" name="TUBO" value="1"<?php if (TUBO) echo " checked"?>>あり　<input type="radio" name="TUBO" value="0"<?php if (!TUBO) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>等幅フォント機能</th>
-<td><input type="radio" name="TELETYPE" value="1"<? if (TELETYPE) echo " checked"?>>あり　<input type="radio" name="TELETYPE" value="0"<? if (!TELETYPE) echo " checked"?>>なし</td>
+<td><input type="radio" name="TELETYPE" value="1"<?php if (TELETYPE) echo " checked"?>>あり　<input type="radio" name="TELETYPE" value="0"<?php if (!TELETYPE) echo " checked"?>>なし</td>
 </tr>
 </table>
 スレ立て時につけられる機能<br>
 <table border="2">
 <tr>
 <th>スレッド内名無し名変更機能「!774格さん!3」</th>
-<td><input type="radio" name="NAME_774" value="1"<? if (NAME_774) echo " checked"?>>あり　<input type="radio" name="NAME_774" value="0"<? if (!NAME_774) echo " checked"?>>なし</td>
+<td><input type="radio" name="NAME_774" value="1"<?php if (NAME_774) echo " checked"?>>あり　<input type="radio" name="NAME_774" value="0"<?php if (!NAME_774) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>名無しへ強制変換機能「!774!force格さん!3」</th>
-<td><input type="radio" name="FORCE_774" value="1"<? if (FORCE_774) echo " checked"?>>あり　<input type="radio" name="FORCE_774" value="0"<? if (!FORCE_774) echo " checked"?>>なし</td>
+<td><input type="radio" name="FORCE_774" value="1"<?php if (FORCE_774) echo " checked"?>>あり　<input type="radio" name="FORCE_774" value="0"<?php if (!FORCE_774) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>IDなし機能「!774!force!noid!3」</th>
-<td><input type="radio" name="FORCE_NO_ID" value="1"<? if (FORCE_NO_ID) echo " checked"?>>あり　<input type="radio" name="FORCE_NO_ID" value="0"<? if (!FORCE_NO_ID) echo " checked"?>>なし</td>
+<td><input type="radio" name="FORCE_NO_ID" value="1"<?php if (FORCE_NO_ID) echo " checked"?>>あり　<input type="radio" name="FORCE_NO_ID" value="0"<?php if (!FORCE_NO_ID) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>強制sage機能「!774!force!sage!3」</th>
-<td><input type="radio" name="FORCE_SAGE" value="1"<? if (FORCE_SAGE) echo " checked"?>>あり　<input type="radio" name="FORCE_SAGE" value="0"<? if (!FORCE_SAGE) echo " checked"?>>なし</td>
+<td><input type="radio" name="FORCE_SAGE" value="1"<?php if (FORCE_SAGE) echo " checked"?>>あり　<input type="radio" name="FORCE_SAGE" value="0"<?php if (!FORCE_SAGE) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>レス時キャップ必須機能「!774!force!stars!3」</th>
-<td><input type="radio" name="FORCE_STARS" value="1"<? if (FORCE_STARS) echo " checked"?>>あり　<input type="radio" name="FORCE_STARS" value="0"<? if (!FORCE_STARS) echo " checked"?>>なし</td>
+<td><input type="radio" name="FORCE_STARS" value="1"<?php if (FORCE_STARS) echo " checked"?>>あり　<input type="radio" name="FORCE_STARS" value="0"<?php if (!FORCE_STARS) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>スレッド内VIP機能解除「!774!normal!3」</th>
-<td><input type="radio" name="FORCE_NORMAL" value="1"<? if (FORCE_NORMAL) echo " checked"?>>あり　<input type="radio" name="FORCE_NORMAL" value="0"<? if (!FORCE_NORMAL) echo " checked"?>>なし</td>
+<td><input type="radio" name="FORCE_NORMAL" value="1"<?php if (FORCE_NORMAL) echo " checked"?>>あり　<input type="radio" name="FORCE_NORMAL" value="0"<?php if (!FORCE_NORMAL) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>名前入力強制機能「!774!name!3」</th>
-<td><input type="radio" name="FORCE_NAME" value="1"<? if (FORCE_NAME) echo " checked"?>>あり　<input type="radio" name="FORCE_NAME" value="0"<? if (!FORCE_NAME) echo " checked"?>>なし</td>
+<td><input type="radio" name="FORCE_NAME" value="1"<?php if (FORCE_NAME) echo " checked"?>>あり　<input type="radio" name="FORCE_NAME" value="0"<?php if (!FORCE_NAME) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>0thelo機能「!774!0thello!3#tripkey」</th>
-<td><input type="radio" name="ZEROTHELO" value="1"<? if (ZEROTHELO) echo " checked"?>>あり　<input type="radio" name="ZEROTHELO" value="0"<? if (!ZEROTHELO) echo " checked"?>>なし</td>
+<td><input type="radio" name="ZEROTHELO" value="1"<?php if (ZEROTHELO) echo " checked"?>>あり　<input type="radio" name="ZEROTHELO" value="0"<?php if (!ZEROTHELO) echo " checked"?>>なし</td>
 </tr>
 <tr>
 <th>アップロード機能「!774!force!up!3」</th>
-<td><input type="radio" name="FORCE_UP" value="1"<? if (FORCE_UP) echo " checked"?>>あり　<input type="radio" name="FORCE_UP" value="0"<? if (!FORCE_UP) echo " checked"?>>なし</td>
+<td><input type="radio" name="FORCE_UP" value="1"<?php if (FORCE_UP) echo " checked"?>>あり　<input type="radio" name="FORCE_UP" value="0"<?php if (!FORCE_UP) echo " checked"?>>なし</td>
 </tr>
 </table>
 <input type="submit" value="設定更新"><br>

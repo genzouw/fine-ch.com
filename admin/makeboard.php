@@ -121,7 +121,7 @@ index.htmlを作り直します。<br>
 <input type="submit" value="作り直す">
 </form>
 </body></html>
-<?
+<?php
 		exit;
 	}
 }

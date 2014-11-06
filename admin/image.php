@@ -82,7 +82,7 @@ $total_page = (int)(($num+$inum-1)/$inum);
 <input type="hidden" name="mode" value="img_del">
 <input type="submit" value="削除">
 page：<?=$_GET['page']?><br>
-<?
+<?php
 for ($i = 1; $i <= $total_page; $i++) {
 	if ($i == $_GET['page']) echo " $i \n";
 	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_GET[bbs]&amp;page=$i\">$i</a> \n";
@@ -124,6 +124,6 @@ for ($i = 1; $i <= $total_page; $i++) {
 <input type="submit" value="削除">
 </form>
 </body></html>
-<?
+<?php
 exit;
 ?>

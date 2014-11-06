@@ -113,7 +113,7 @@ function g(key,tmp1,tmp2,xx1,xx2,xx3,len){
 <style type=text/css><!-- img {border:0;} --></style>
 </head>
 <body bgcolor="<?=$SETTING['BBS_BG_COLOR']?>" text="<?=$SETTING['BBS_TEXT_COLOR']?>" link="<?=$SETTING['BBS_LINK_COLOR']?>" alink="<?=$SETTING['BBS_ALINK_COLOR']?>" vlink="<?=$SETTING['BBS_VLINK_COLOR']?>">
-<? readfile('headad.txt'); ?>
+<?php readfile('headad.txt'); ?>
 <a href="./">■掲示板に戻る■</a>
 <?php
 if(!JIKAN_KISEI or ($JIKAN > JIKAN_END and $JIKAN < JIKAN_START)) {
@@ -263,7 +263,7 @@ TD.Type1 {color: #ffffff;text-align: left;}A.BigLine {color: #000000;text-decora
 --></style>
 </head>
 <body text="#000000" bgcolor="#efefef">
-<? readfile("headad.txt") ?>
+<?php readfile("headad.txt") ?>
 <b><font size="+1" color="#ff0000"><?=$topic?></font></b><br>
 <dl>
 <dt>1 名前：<font color="green"><b><?=VERSION?></b></font>投稿日：2001/04/12(木) 15:11
@@ -273,7 +273,7 @@ TD.Type1 {color: #ffffff;text-align: left;}A.BigLine {color: #000000;text-decora
 <font size=-2><?=VERSION?></font>
 <hr>
 <p>
-<?
+<?php
 	if (is_file("../$bbs/kako/$key.html")) {
 		?>
 隊長! 過去ログ倉庫で、<a target="_self" href="<?="$URL/$bbs/kako/$key.html"?>">スレッド<?=$key?>.html</A> を発見しました。

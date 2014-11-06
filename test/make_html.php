@@ -149,6 +149,6 @@ header("Content-Type: text/html; charset=UTF-8");
 <br><br><br>
 </body>
 </html>
-<?
+<?php
 exit;
 ?>

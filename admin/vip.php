@@ -97,7 +97,7 @@ $st = ($_GET['page'] - 1) * $thread;
 <?=$comment?>
 <br>
 page：<?=$_GET['page']?><br>
-<?
+<?php
 $total = count($PAGEFILE) + $thread - 1;
 $total_page = (int)($total/$thread);
 for ($i = 1; $i <= $total_page; $i++) {
@@ -119,13 +119,13 @@ for ($i = $st; $i < $st+$thread; $i++) {
 <td><?=$SUBJECT[$tmp]?></td>
 <td><input type="text" size="10" name="name_774" value="<?=$threadconf[$tmp][1]?>"></td>
 <td><input type="text" size="10" name="force_774" value="<?=$threadconf[$tmp][2]?>"></td>
-<td><input type="checkbox" name="no_id"<? if ($threadconf[$tmp][3]) echo " checked"; ?> value="1"></td>
-<td><input type="checkbox" name="sage"<? if ($threadconf[$tmp][4]) echo " checked"; ?> value="1"></td>
-<td><input type="checkbox" name="stars"<? if ($threadconf[$tmp][5]) echo " checked"; ?> value="1"></td>
-<td><input type="checkbox" name="normal"<? if ($threadconf[$tmp][6]) echo " checked"; ?> value="1"></td>
-<td><input type="checkbox" name="name"<? if ($threadconf[$tmp][7]) echo " checked"; ?> value="1"></td>
-<td><input type="checkbox" name="zerothello"<? if ($threadconf[$tmp][8]) echo " checked"; ?> value="1"></td>
-<td><input type="checkbox" name="up"<? if ($threadconf[$tmp][9]) echo " checked"; ?> value="1"></td>
+<td><input type="checkbox" name="no_id"<?php if ($threadconf[$tmp][3]) echo " checked"; ?> value="1"></td>
+<td><input type="checkbox" name="sage"<?php if ($threadconf[$tmp][4]) echo " checked"; ?> value="1"></td>
+<td><input type="checkbox" name="stars"<?php if ($threadconf[$tmp][5]) echo " checked"; ?> value="1"></td>
+<td><input type="checkbox" name="normal"<?php if ($threadconf[$tmp][6]) echo " checked"; ?> value="1"></td>
+<td><input type="checkbox" name="name"<?php if ($threadconf[$tmp][7]) echo " checked"; ?> value="1"></td>
+<td><input type="checkbox" name="zerothello"<?php if ($threadconf[$tmp][8]) echo " checked"; ?> value="1"></td>
+<td><input type="checkbox" name="up"<?php if ($threadconf[$tmp][9]) echo " checked"; ?> value="1"></td>
 <td>
  <input type="hidden" name="bbs" value="<?=$_REQUEST['bbs']?>">
  <input type="hidden" name="key" value="<?=$tmp?>">

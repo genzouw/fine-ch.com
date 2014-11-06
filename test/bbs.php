@@ -37,9 +37,10 @@ if (is_file($set_file)) {
 		list ($name, $value) = explode("=", $tmp);
 		$SETTING[$name] = $value;
 	}
+} else {
+	DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！$PATH");
 }
-#設定ファイルがない（ERROR)
-else DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！$PATH");
+
 require $PATH.'config.php';
 #====================================================
 #　入力情報を取得（ＰＯＳＴ）
@@ -500,7 +501,7 @@ function DispError($title, $topic = "") {
     <input type="hidden" name="key" value="<?=$_POST['key']?>">
 
 <br>
-<?
+<?php
 if (isset($_FILES['file']['name']) and $_FILES['file']['name']) {
 	echo "もう一度ファイルの指定を行ってください。<br>\n";
 	echo '<input type="file" name="file" size="50"><br>';
@@ -511,7 +512,7 @@ if (isset($_FILES['file']['name']) and $_FILES['file']['name']) {
 変更する場合は戻るボタンで戻って書き直して下さい。<br><br>
 <font size="-1">(cookieを設定するとこの画面はでなくなります。)</font><br>
 </body></html>
-<?
+<?php
 	}
 	# $topicがあるときはエラー画面表示
 	else {
@@ -520,7 +521,7 @@ if (isset($_FILES['file']['name']) and $_FILES['file']['name']) {
 <font size="+1" color="#FF0000"><b><?=$topic?></b></font>
 <ul><br>ホスト<b><?=$HOST?></b><br><b><?=$_POST['subject']?> </b><br>名前： <?=$_POST['FROM']?><br>E-mail：<?=$_POST['mail']?> <br>内容：<br><?=$_POST['MESSAGE']?><br><br></ul>
 <center>こちらでリロードしてください。<a href="../<?=$_POST['bbs']?>/"> GO! </a></center></body></html>
-<?
+<?php
 	}
 	exit();
 }

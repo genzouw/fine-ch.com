@@ -70,7 +70,7 @@ if(isset($_GET['mode']) and $_GET['mode'] == "allow") {
 <input type="hidden" name="mode" value="allow">
 <input type="submit" value="解除">
 <table border="1" cellspacing="0" cellpadding="2">
-<?
+<?php
 foreach ($deny_array as $deny) {
 	echo '<tr><td><input type="checkbox" name="allow[]" value="'.$deny.'"></td><td>'.$deny."</td></tr>\n";
 }

@@ -151,7 +151,7 @@ if(isset($_REQUEST['mode']) and ($_REQUEST['mode'] == "view" or $_REQUEST['mode'
 削除メッセージ　：　<input type=text name="mes" value="<?=$SETTING['BBS_DELETE_NAME']?>">
 <input type=submit value="実行"></td></tr>
 </table>
-<?
+<?php
 	echo "page：$_GET[page]<br>\n";
 	for ($i = 1; $i <= $total_page; $i++) {
 		if ($i == $_GET['page']) echo " $i \n";
@@ -246,7 +246,7 @@ clearstatcache();
 if (is_writable("../$_REQUEST[bbs]/dat/$tmp.dat")) {
 ?> <form action="<?=$_SERVER['PHP_SELF']?>" method="<?=$method?>">
  <select name="stopper">
-<? foreach($stopper_array as $key=>$stopper) echo ' <option value="'.$key.'">'.$stopper."\n";?>
+<?php foreach($stopper_array as $key=>$stopper) echo ' <option value="'.$key.'">'.$stopper."\n";?>
  </select>で
  <input type="submit" value="ストップ">
  <input type="hidden" name="bbs" value="<?=$_REQUEST['bbs']?>">
