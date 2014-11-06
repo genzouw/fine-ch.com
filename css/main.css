@@ -1,0 +1,60 @@
+*{
+	font-family: monospace;
+}
+html, body{
+    height: 99%;
+    margin: 0;
+    padding: 0;
+}
+body{
+	background-color: #eee;
+	text-align: center;
+}
+#container
+{
+	border: 1px solid gray;
+	margin: 1%;
+	text-align: left;
+    height: 96%;
+}
+/*
+#container *
+{
+	margin: 1px;
+}
+*/
+div.list-area table{
+    /*table-layout: fixed;*/
+    border-collapse: collapse;
+    empty-cells: show;
+    border: 2px solid #663300;
+}
+div.list-area table thead th{
+    border: 1px solid gray;
+    background-color: #446;
+    color: white;
+}
+div.list-area table tbody td{
+    border: 1px solid gray;
+    background-color: white;
+}
+
+
+
+
+
+#lead-time-table table caption {
+	background-color: white;
+	border: 1px solid gray;
+}
+#lead-time-table table {
+	table-collapse: collapse;
+	table-layout: fixed;
+	width: 40em;
+}
+#lead-time-table table th {
+	text-align: center;
+}
+#lead-time-table table th,  #lead-time-table table td {
+	border: 1px solid gray;
+}

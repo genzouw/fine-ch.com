@@ -1,0 +1,4 @@
+AddCharset utf-8 json
+AddType text/javascript json
+
+Header append Access-Control-Allow-Origin: *
