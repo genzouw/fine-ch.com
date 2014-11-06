@@ -354,8 +354,8 @@ if (!$_POST['FROM']) $_POST['FROM'] = $SETTING['BBS_NONAME_NAME'];
 #====================================================
 #　レスポンスアンカー（本文）
 #====================================================
-$_POST['MESSAGE'] = preg_replace("/&gt;&gt;([0-9]+)(?![-\d])/", "<a href=\"../test/read.php/$_POST[bbs]/$_POST[key]/$1\" target=\"_blank\">&gt;&gt;$1</a>", $_POST['MESSAGE']);
-$_POST['MESSAGE'] = preg_replace("/&gt;&gt;([0-9]+)\-([0-9]+)/", "<a href=\"../test/read.php/$_POST[bbs]/$_POST[key]/$1-$2\" target=\"_blank\">&gt;&gt;$1-$2</a>", $_POST['MESSAGE']);
+$_POST['MESSAGE'] = preg_replace("/&gt;&gt;([0-9]+)(?![-\d])/", "<a href=\"/post/read.php/$_POST[bbs]/$_POST[key]/$1\" target=\"_blank\">&gt;&gt;$1</a>", $_POST['MESSAGE']);
+$_POST['MESSAGE'] = preg_replace("/&gt;&gt;([0-9]+)\-([0-9]+)/", "<a href=\"/post/read.php/$_POST[bbs]/$_POST[key]/$1-$2\" target=\"_blank\">&gt;&gt;$1-$2</a>", $_POST['MESSAGE']);
 #====================================================
 #　ファイル操作（ホスト記録）
 #====================================================
@@ -491,7 +491,7 @@ function DispError($title, $topic = "") {
 <br>
 
 </b>
-  <form method="post" action="../test/bbs.php" enctype="<?=$GLOBALS['enctype']?>">
+  <form method="post" action="/post/bbs.php" enctype="<?=$GLOBALS['enctype']?>">
     <input type="hidden" name="subject" value="<?=$sbj?>">
     <input type="hidden" NAME="FROM"  value="<?=$frm?>">
     <input type="hidden" NAME="mail"  value="<?=$mml?>">

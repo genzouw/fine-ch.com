@@ -83,7 +83,7 @@ if ($nofirst != "true" or $st == 1 or strstr($pairs[3], "w")) {
 	$message = preg_replace("/(https?):\/\/(www\d*\.|)([\da-zA-Z\-\.]{1,10})([\x21-\x7E]*|)/i","<a href=$1://$2$3$4>$3</a>",$message);
 	$read = str_replace("r.php", "read.php", $_SERVER['SCRIPT_NAME']);
 	$message = str_replace("http://".$_SERVER['HTTP_HOST'].$read, $_SERVER['SCRIPT_NAME'], $message);
-	$message = str_replace("../test/read.php/$bbs/$key/",'',$message);
+	$message = str_replace("/post/read.php/$bbs/$key/",'',$message);
 	$message = preg_replace("/<a.+<img src=\"(.+\.)(\w+)\"[^>]*>/", "<a href=\"../../../$1$2\"> $2 ", $message);
 	$msgline = substr_count($message, "<br>") + 1;
 	if ($msgline > 6 and $to != 1) {
@@ -109,7 +109,7 @@ for ($s = $st; $s <= $to; $s++){
 	$message = preg_replace("/(https?):\/\/(www\d*\.|)([\da-zA-Z\-\.]{1,10})([\x21-\x7E]*|)/i","<a href=$1://$2$3$4>$3</a>",$message);
 	$read = str_replace("r.php", "read.php", $_SERVER['SCRIPT_NAME']);
 	$message = str_replace("http://".$_SERVER['HTTP_HOST'].$read, $_SERVER['SCRIPT_NAME'], $message);
-	$message = str_replace("../test/read.php/$bbs/$key/",'',$message);
+	$message = str_replace("/post/read.php/$bbs/$key/",'',$message);
 	$message = preg_replace("/<a.+<img src=\"(.+\.)(\w+)\"[^>]+>/", "<a href=\"../../../$1$2\"> $2 ", $message);
 	$msgline = substr_count($message, "<br>") + 1;
 	if ($msgline > 6 and $st != $to) {

@@ -88,7 +88,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "res_del" and isset($_POST['del'
 		}
 		if (!$_POST['mes']) {
 			foreach ($temp as $key=>$line) {
-				$line = preg_replace("!<a href=\"\.\./test/read\.php/$_POST[bbs]/$_POST[key]/([\d|\-]+)\" target=\"_blank\">&gt;&gt;([\d|\-]+)</a>!e", "'<a href=\"../test/read.php/$_POST[bbs]/$_POST[key]/'.res_num('$1',$del).'\" target=\"_blank\">&gt;&gt;'.res_num('$2',$del).'</a>'", $line);
+				$line = preg_replace("!<a href=\"\.\./post/read\.php/$_POST[bbs]/$_POST[key]/([\d|\-]+)\" target=\"_blank\">&gt;&gt;([\d|\-]+)</a>!e", "'<a href=\"../post/read.php/$_POST[bbs]/$_POST[key]/'.res_num('$1',$del).'\" target=\"_blank\">&gt;&gt;'.res_num('$2',$del).'</a>'", $line);
 				$temp[$key] = $line;
 			}
 		}
@@ -96,7 +96,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "res_del" and isset($_POST['del'
 	$fp = fopen($datafile, "w");
 	foreach ($temp as $tmp) fputs($fp, $tmp);
 	fclose($fp);
-	require '../test/make_work.php';
+	require '../post/make_work.php';
 	$sub_txt = MakeWorkFile($_POST['bbs'], $_POST['key']);
 	if (!$_POST['mes']) {
 		$fp = fopen("../$_POST[bbs]/subject.txt", "w");
@@ -134,7 +134,7 @@ if(isset($_REQUEST['mode']) and ($_REQUEST['mode'] == "view" or $_REQUEST['mode'
 <h1 class="title"><?=$SETTING['BBS_TITLE']?></h1>
 <h3>あぼーん</h3>
 <hr>
-スレッド ： <a class="item" href="../test/read.php/<?=$_REQUEST['bbs']?>/<?=$_REQUEST['key']?>/">#<?=$_REQUEST['bbs'].$_REQUEST['key']?></a><br>
+スレッド ： <a class="item" href="../post/read.php/<?=$_REQUEST['bbs']?>/<?=$_REQUEST['key']?>/">#<?=$_REQUEST['bbs'].$_REQUEST['key']?></a><br>
 タイトル ： <font color="red"><b><?=$subject?></b></font><br>
 <br>
 <font color="red"><?=$comment?></font>
@@ -199,7 +199,7 @@ elseif (isset($_POST['mode']) and $_POST['mode'] == "stop") {
 		fputs($fp, "停止しました。。。<>停止<>停止<>真・スレッドストッパー。。。$stopper<>\n");
 		fclose($fp);
 		chmod($dattemp, 0444);
-		require '../test/make_work.php';
+		require '../post/make_work.php';
 		MakeWorkFile($_POST['bbs'], $_POST['key']);
 		$comment = "スレッドストップしました。メニューの<b>index.htmlを作り直す</b>をクリックしてください。";
 	}
@@ -239,7 +239,7 @@ for ($i = 1; $i <= $total_page; $i++) {
 for ($i = $st; $i < $st+$thread; $i++) {
 	if (!isset($PAGEFILE[$i])) break;
 	$tmp = $PAGEFILE[$i];
-	?><tr><td> <a class="item" href="../test/read.php/<?=$_REQUEST['bbs']."/".$tmp?>/l50">#<?=$_REQUEST['bbs'].$tmp?></a> </td><td><?=$SUBJECT[$tmp]?></td>
+	?><tr><td> <a class="item" href="../post/read.php/<?=$_REQUEST['bbs']."/".$tmp?>/l50">#<?=$_REQUEST['bbs'].$tmp?></a> </td><td><?=$SUBJECT[$tmp]?></td>
 <td>
 <?php
 clearstatcache();

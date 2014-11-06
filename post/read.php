@@ -41,10 +41,9 @@ if (!empty($_SERVER['PATH_INFO'])) {
 #==================================================
 #　初期情報の取得（設定ファイル）
 #==================================================
-preg_match("/(.*)(\/test\/read\.php)(.*)/", $_SERVER['SCRIPT_NAME'], $match);
+preg_match("/(.*)(\/post\/read\.php)(.*)/", $_SERVER['SCRIPT_NAME'], $match);
 $URL = 'http://'.$_SERVER['HTTP_HOST'].$match[1];
 $SCRIPT = $match[2];
-$BASEURL = "$URL/$bbs/";
 #設定ファイルを読む
 $set_file = "../$bbs/SETTING.TXT";
 if (is_file($set_file)) {
@@ -86,7 +85,6 @@ if (GZ_FLAG) ob_start("ob_gzhandler");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<base href="<?=$BASEURL?>">
 <title><?=$subject?></title>
 <script type="text/javascript"><!--
 function l(e){
@@ -114,14 +112,14 @@ function g(key,tmp1,tmp2,xx1,xx2,xx3,len){
 </head>
 <body bgcolor="<?=$SETTING['BBS_BG_COLOR']?>" text="<?=$SETTING['BBS_TEXT_COLOR']?>" link="<?=$SETTING['BBS_LINK_COLOR']?>" alink="<?=$SETTING['BBS_ALINK_COLOR']?>" vlink="<?=$SETTING['BBS_VLINK_COLOR']?>">
 <?php readfile('headad.txt'); ?>
-<a href="./">■掲示板に戻る■</a>
+<a href="/board/">■掲示板に戻る■</a>
 <?php
 if(!JIKAN_KISEI or ($JIKAN > JIKAN_END and $JIKAN < JIKAN_START)) {
-	echo "<a href=\"..$SCRIPT/$bbs/$key/\">全部</a>\n";
+	echo "<a href=\"/post/read.php/$bbs/$key/\">全部</a>\n";
 }
 for ($iCnt = 1; $iCnt <= $LINENUM; $iCnt += 100){
 	$iTo = $iCnt + 99;
-	echo "<a href=\"..$SCRIPT/$bbs/$key/$iCnt-$iTo\">$iCnt-</a>\n";
+	echo "<a href=\"/post/read.php/$bbs/$key/$iCnt-$iTo\">$iCnt-</a>\n";
 }
 $red_num = (int)(THREAD_RES*19/20);
 $yellow_num = (int)(THREAD_RES*9/10);
@@ -140,7 +138,7 @@ elseif ($fsize >= 480){
 	$alert = '<p><table><tr><td bgcolor=red><font color=white>サイズが 480KB を超えています。500KB を超えると書きこめなくなるよ。</font></td></tr></table>';
 }
 ?>
-<a href="..<?=$SCRIPT."/".$bbs."/".$key?>/l50">最新50</a>
+<a href="/post/read.php/<?=$bbs."/".$key?>/l50">最新50</a>
 <?=$alert?>
 <p><font size="+1" color="<?=$SETTING['BBS_SUBJECT_COLOR']?>"><?=$subject?></font><dl>
 <?php
@@ -185,7 +183,7 @@ while ($s <= $END) {
 				$message='[ここ壊れてます]';
 			}
 			$message = preg_replace("/(https?|ftp):\/\/([\w;\/\?:\@&=\+\$,\-\.!~\*'\(\)%#]+)/", "<a href=\"$1://$2\" target=\"_blank\">$1://$2</a>", $message);
-			$message = str_replace("../test/read.php/$bbs/$key/",'',$message);
+			$message = str_replace("/post/read.php/$bbs/$key/",'',$message);
 			$mailto = $mail ? "<a href=\"mailto:$mail\"><b>$name</b></a>" : "<font color=\"$SETTING[BBS_NAME_COLOR]\"><b>$name</b></font>";
 			echo "<dt>$s ：$mailto ： $time<br><dd> $message <br><br><br>\n";
 			$s++;
@@ -196,20 +194,20 @@ while ($s <= $END) {
 }
 echo "</dl><font color=\"red\" face=\"arial\"><b>$fsize KB</b></font><hr>\n";
 if ($LINENUM <= 1000) {
-	if ($LINENUM >= $s) echo "<center><a href=\"..$SCRIPT/$bbs/$key/$END-\">続きを読む</a></center><hr>\n";
-	else echo "<center><a href=\"..$SCRIPT/$bbs/$key/$LINENUM-\">新着レスの表示</a></center><hr>\n";
+	if ($LINENUM >= $s) echo "<center><a href=\"/post/read.php/$bbs/$key/$END-\">続きを読む</a></center><hr>\n";
+	else echo "<center><a href=\"/post/read.php/$bbs/$key/$LINENUM-\">新着レスの表示</a></center><hr>\n";
 }
 $t = $s + 99;
 $u = 1;
-echo "<a href=\"./\">掲示板に戻る</a> <a href=\"..$SCRIPT/$bbs/$key/\">全部</a>\n";
+echo "<a href=\"/board/\">掲示板に戻る</a> <a href=\"/post/read.php/$bbs/$key/\">全部</a>\n";
 if ($mae) {
-	if ($mae == 1) echo "<a href=\"..$SCRIPT/$bbs/$key/1\">前100</a>\n";
+	if ($mae == 1) echo "<a href=\"/post/read.php/$bbs/$key/1\">前100</a>\n";
 	else {
 		if ($mae > 100) $u = $mae-99;
-		echo "<a href=\"..$SCRIPT/$bbs/$key/$u-$mae\">前100</a>\n";
+		echo "<a href=\"/post/read.php/$bbs/$key/$u-$mae\">前100</a>\n";
 	}
 }
-echo "<a href=\"..$SCRIPT/$bbs/$key/$s-$t\">次100</a> <a href=\"..$SCRIPT/$bbs/$key/l50\">最新50</a><br>\n";
+echo "<a href=\"/post/read.php/$bbs/$key/$s-$t\">次100</a> <a href=\"/post/read.php/$bbs/$key/l50\">最新50</a><br>\n";
 if ($stop != 1) {
 	$fp  = fopen("../$bbs/threadconf.cgi", "r");
 	while ($vip = fgetcsv($fp, 1024)) {
@@ -219,7 +217,7 @@ if ($stop != 1) {
 	fclose($fp);
 	if (UPLOAD or $vip[9]) {
 		?>
-<form method="post" action="../test/bbs.php" enctype="multipart/form-data">
+<form method="post" action="/post/bbs.php" enctype="multipart/form-data">
 <input type="submit" value="書き込む" name="submit">
 名前： <input name="FROM" size="19">
 E-mail<font size="1"> (省略可) </font>: <input name="mail" size="19"><br>
@@ -233,7 +231,7 @@ E-mail<font size="1"> (省略可) </font>: <input name="mail" size="19"><br>
 	}
 	else {
 		?>
-<form method="post" action="../test/bbs.php">
+<form method="post" action="/post/bbs.php">
 <input type="submit" value="書き込む" name="submit">
 名前： <input name="FROM" size="19">
 E-mail<font size="1"> (省略可) </font>: <input name="mail" size="19"><br>
@@ -273,19 +271,14 @@ TD.Type1 {color: #ffffff;text-align: left;}A.BigLine {color: #000000;text-decora
 <font size=-2><?=VERSION?></font>
 <hr>
 <p>
-<?php
-	if (is_file("../$bbs/kako/$key.html")) {
-		?>
+<?php if (is_file("../$bbs/kako/$key.html")) { ?>
 隊長! 過去ログ倉庫で、<a target="_self" href="<?="$URL/$bbs/kako/$key.html"?>">スレッド<?=$key?>.html</A> を発見しました。
-<?php
-	}
-	else {
-		?>
+<?php } else { ?>
 <a target="_self" href="<?="$URL/$bbs/kako/"?>">過去ログ倉庫</A>にもありませんでした。<br>問い合わせても見つかる可能性はほとんどありません。
+<?php } ?>
+</body></html>;
 <?php
-	}
-	echo '</body></html>';
-	if (GZ_FLAG) ob_end_flush();
-	exit;
+    if (GZ_FLAG) {
+	    ob_end_flush();
+    }
 }
-?>

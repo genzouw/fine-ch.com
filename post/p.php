@@ -4,7 +4,7 @@ $th_count = 5; // 1画面に表示するスレッドの数。
 #==================================================
 #　リクエスト解析
 #==================================================
-$url = preg_replace("/(.*)\/test\/.*/", "http://$_SERVER[HTTP_HOST]$1", $_SERVER['SCRIPT_NAME']);
+$url = preg_replace("/(.*)\/post\/.*/", "http://$_SERVER[HTTP_HOST]$1", $_SERVER['SCRIPT_NAME']);
 $bbs = '';
 $st = 1;
 extract($_GET);
@@ -24,7 +24,7 @@ $mae = $st - $th_count;
 if ($mae <= 0) {$mae = 1;}
 $tugi = $st + $th_count;
 if ($tugi > $end + 1) {$tugi = $end + 1;}
-?><HTML><HEAD><BASE href=<?=$url.'/test/r.php/'.$bbs?>/><TITLE><?=$bbs?> スレッド一覧</TITLE></HEAD><BODY><A href=../../p.php/<?=$bbs?>/<?=$mae?>>前</A> <A href=../../p.php/<?=$bbs?>/<?=$tugi?>>次</A><HR><?php
+?><HTML><HEAD><BASE href=<?=$url.'/post/r.php/'.$bbs?>/><TITLE><?=$bbs?> スレッド一覧</TITLE></HEAD><BODY><A href=../../p.php/<?=$bbs?>/<?=$mae?>>前</A> <A href=../../p.php/<?=$bbs?>/<?=$tugi?>>次</A><HR><?php
 for ($i = $st; $i < $tugi; $i++) {
 	list($id, $sub) = explode("<>", $th_titles[$i-1]);
 	$id = str_replace(".dat", "", $id);

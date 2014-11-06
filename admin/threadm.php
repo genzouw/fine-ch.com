@@ -57,7 +57,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "del") {
 <h1 class="title"><?=$SETTING['BBS_TITLE']?></h1>
 <h3>スレッド削除</h3>
 <hr>
-スレッド：<a class="item" href="../test/read.php/<?=$_POST['bbs']."/".$_POST['key']?>/l50">#<?=$_POST['bbs'].$_POST['key']?></a><br>
+スレッド：<a class="item" href="../post/read.php/<?=$_POST['bbs']."/".$_POST['key']?>/l50">#<?=$_POST['bbs'].$_POST['key']?></a><br>
 タイトル：<font color="<?=$SETTING['BBS_SUBJECT_COLOR']?>"><b><?=$match[1]?></b></font><br>
 レス数：<?=$match[2]?><br><br><br>
 このスレッドを削除します。<br><br>
@@ -151,7 +151,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "mov") {
 <h1 class="title"><?=$SETTING['BBS_TITLE']?></h1>
 <h3>スレッド移動</h3>
 <hr>
-スレッド：<a class="item" href="../test/read.php/<?=$_POST['bbs']."/".$_POST['key']?>/l50">#<?=$_POST['bbs'].$_POST['key']?></a><br>
+スレッド：<a class="item" href="../post/read.php/<?=$_POST['bbs']."/".$_POST['key']?>/l50">#<?=$_POST['bbs'].$_POST['key']?></a><br>
 タイトル：<font color="<?=$SETTING['BBS_SUBJECT_COLOR']?>"><b><?=$match[1]?></b></font><br>
 レス数：<?=$match[2]?><br><br><br>
 このスレッドを移動します。<br><br>
@@ -186,7 +186,7 @@ img {border:0;}
 --></style>
 </head>
 <body text="$SETTING[BBS_TEXT_COLOR]" bgcolor="$SETTING[BBS_THREAD_COLOR]" link="$SETTING[BBS_LINK_COLOR]" alink="$SETTING[BBS_ALINK_COLOR]" vlink="$SETTING[BBS_VLINK_COLOR]">
-<a href="../">■掲示板に戻る■</a>
+<a href="/board/">■掲示板に戻る■</a>
 <dl>
 <font size=+1 color="$SETTING[BBS_SUBJECT_COLOR]">$subject</font></b>
 EOF;
@@ -203,7 +203,7 @@ EOF;
 				$message='[ここ壊れてます]';
 			}
 			$message = preg_replace("/(https?|ftp):\/\/([\x21-\x7E]+)/",'<a href="$1://$2" target="_blank">$1://$2</a>',$message);
-			$message = str_replace("../test/read.php/$_POST[bbs]/$_POST[key]/",'#', $message);
+			$message = str_replace("../post/read.php/$_POST[bbs]/$_POST[key]/",'#', $message);
 			$message = preg_replace("|<([^>]+\"\.\./)$_POST[bbs]/|", "<$1", $message);
 			$mailto = $mail ? "<a href=\"mailto:$mail\"><b> $name </b></a>" : "<font color=\"$SETTING[BBS_NAME_COLOR]\"><b>$name</b></font>";
 			fputs($fp, "<dt><a name=\"$s\">$s</a> 名前： $mailto 投稿日： $time<br><dd> $message <br><br><br>\n");
@@ -287,7 +287,7 @@ for ($i = $st; $i < $st+$thread; $i++) {
 	if (!isset($PAGEFILE[$i])) break;
 	$tmp = $PAGEFILE[$i];
 	?>
-<tr><td> <a class="item" href="../test/read.php/<?=$_REQUEST['bbs']."/".$tmp?>/l50">#<?=$_REQUEST['bbs'].$tmp?></a> </td><td><?=$SUBJECT[$tmp]?></td>
+<tr><td> <a class="item" href="../post/read.php/<?=$_REQUEST['bbs']."/".$tmp?>/l50">#<?=$_REQUEST['bbs'].$tmp?></a> </td><td><?=$SUBJECT[$tmp]?></td>
 <td>
  <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
  <input type=hidden name="bbs" value="<?=$_REQUEST['bbs']?>">

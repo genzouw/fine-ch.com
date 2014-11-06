@@ -92,7 +92,7 @@ function MakeWorkFile($bbs, $key, $outdat="") {
 				}
 			}
 			if ($messx) {
-				$logall .= "<font color=\"$SETTING[BBS_NAME_COLOR]\">（省略されました・・全てを読むには<a href=\"../test/read.php/$_POST[bbs]/$key/$topnum\" target=\"_blank\">ここ</a>を押してください）</font><br>";
+				$logall .= "<font color=\"$SETTING[BBS_NAME_COLOR]\">（省略されました・・全てを読むには<a href=\"/post/read.php/$_POST[bbs]/$key/$topnum\" target=\"_blank\">ここ</a>を押してください）</font><br>";
 			}
 		}
 		$logall .= "<br>\n";

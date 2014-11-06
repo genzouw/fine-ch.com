@@ -19,7 +19,7 @@ if (is_file($set_pass)) {
 }
 else disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！");
 # index.txtの読み込み
-list($header,) = explode('<CUT>', implode('', file("../test/index.txt")));
+list($header,) = explode('<CUT>', implode('', file("../post/index.txt")));
 $header = str_replace("<BBS_TITLE>", $SETTING['BBS_TITLE'], $header);
 $header = str_replace("<BBS_TEXT_COLOR>", $SETTING['BBS_TEXT_COLOR'], $header);
 $header = str_replace("<BBS_MENU_COLOR>", $SETTING['BBS_MENU_COLOR'], $header);
@@ -30,16 +30,16 @@ $header = str_replace("<BBS_BG_COLOR>", $SETTING['BBS_BG_COLOR'], $header);
 $header = str_replace("<BBS_BG_PICTURE>", $SETTING['BBS_BG_PICTURE'], $header);
 $header = str_replace("<BBS_TITLE_NAME>", '<h1 class="title">'.$SETTING['BBS_TITLE'].'</h1>
 <h3>テキスト編集</h3>', $header);
-$headad = implode('', file("../test/headad.txt"));
+$headad = implode('', file("../post/headad.txt"));
 if (isset($_REQUEST['mode']) and $_REQUEST['mode'] == 'view') {
 	$head = implode('', file("../$_REQUEST[bbs]/head.txt"));
 	$header = str_replace("<GUIDE>", $head, $header);
-	$option = implode('', file("../test/option.txt"));
+	$option = implode('', file("../post/option.txt"));
 	$header = str_replace("<OPTION>", $option, $header);
-	$putad = implode('', file("../test/putad.txt"));
+	$putad = implode('', file("../post/putad.txt"));
 	$header = str_replace("<PUTAD>", $putad, $header);
 	echo $header;
-	$headad = implode('', file("../test/headad.txt"));
+	$headad = implode('', file("../post/headad.txt"));
 	if ($headad) {
 		echo '<table border="1" cellspacing="7" cellpadding="3" width="95%" bgcolor="'.$SETTING['BBS_MENU_COLOR']."\" align=\"center\">\n <tr>\n  <td>\n";
 		echo $headad;
@@ -49,7 +49,7 @@ if (isset($_REQUEST['mode']) and $_REQUEST['mode'] == 'view') {
 }
 if (isset($_REQUEST['file'])) {
 	if ($_REQUEST['file'] == 'option' or $_REQUEST['file'] == 'putad' or $_REQUEST['file'] == 'headad')
-			$file_name = "../test/$_REQUEST[file].txt";
+			$file_name = "../post/$_REQUEST[file].txt";
 	elseif ($_REQUEST['file'] == 'head') $file_name = "../$_REQUEST[bbs]/head.txt";
 	else disperror("ＥＲＲＯＲ！", "ファイル名が不正です。");
 	if (!is_file($file_name)) disperror("ＥＲＲＯＲ！", "ファイル（".$file_name."）がありません。ファイルをアップロードしてください。");

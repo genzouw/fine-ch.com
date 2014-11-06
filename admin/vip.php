@@ -115,7 +115,7 @@ for ($i = $st; $i < $st+$thread; $i++) {
 	?>
 <tr>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
-<td> <a class="item" href="../test/read.php/<?=$_REQUEST['bbs']."/".$tmp?>/l50">#<?=$_REQUEST['bbs'].$tmp?></a> </td>
+<td> <a class="item" href="../post/read.php/<?=$_REQUEST['bbs']."/".$tmp?>/l50">#<?=$_REQUEST['bbs'].$tmp?></a> </td>
 <td><?=$SUBJECT[$tmp]?></td>
 <td><input type="text" size="10" name="name_774" value="<?=$threadconf[$tmp][1]?>"></td>
 <td><input type="text" size="10" name="force_774" value="<?=$threadconf[$tmp][2]?>"></td>

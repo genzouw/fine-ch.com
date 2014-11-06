@@ -96,7 +96,7 @@ elseif ($_GET['mode'] == 'remake') {
 		else $bbs_title = '<h1><font color="'.$SETTING['BBS_TITLE_COLOR'].'">'.$SETTING['BBS_TITLE'].'</font></h1>';
 		$set_cookie = '';
 		$HOST = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-		require('../test/make_html.php');
+		require('../post/make_html.php');
 		exit;
 	}
 	else {

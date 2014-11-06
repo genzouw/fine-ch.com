@@ -8,7 +8,7 @@ $count = 0;
 foreach ($PAGEFILE as $tmp) {
 	$count++;
 	$dat = str_replace(".dat", "", $tmp);
-	fputs($fp, "<a href=\"../test/read.php/$_REQUEST[bbs]/$dat/l50\">$count: $SUBJECT[$tmp]</a><br>\n");
+	fputs($fp, "<a href=\"/post/read.php/$_REQUEST[bbs]/$dat/l50\">$count: $SUBJECT[$tmp]</a><br>\n");
 }
 fputs($fp, '<div align="right"><a href="./kako/"><b>過去ログ倉庫はこちら</b></a></font>');
 fputs($fp, "</body></html>\n");
@@ -18,7 +18,7 @@ fclose($fp);
 #====================================================
 $fp = fopen($INDEXFILE, "w");
 #--------ヘッダ＆上の広告
-list($header, $footer) = explode('<CUT>', implode('', file("../test/index.txt")));
+list($header, $footer) = explode('<CUT>', implode('', file("../post/index.txt")));
 $header = str_replace("<BBS_TITLE>", $SETTING['BBS_TITLE'], $header);
 $header = str_replace("<BBS_TEXT_COLOR>", $SETTING['BBS_TEXT_COLOR'], $header);
 $header = str_replace("<BBS_MENU_COLOR>", $SETTING['BBS_MENU_COLOR'], $header);
@@ -30,12 +30,12 @@ $header = str_replace("<BBS_BG_PICTURE>", $SETTING['BBS_BG_PICTURE'], $header);
 $header = str_replace("<BBS_TITLE_NAME>", $bbs_title, $header);
 $head = implode('', file($PATH."head.txt"));
 $header = str_replace("<GUIDE>", $head, $header);
-$option = implode('', file("../test/option.txt"));
+$option = implode('', file("../post/option.txt"));
 $header = str_replace("<OPTION>", $option, $header);
-$putad = implode('', file("../test/putad.txt"));
+$putad = implode('', file("../post/putad.txt"));
 $header = str_replace("<PUTAD>", $putad, $header);
 fputs($fp, $header);
-$headad = implode('', file("../test/headad.txt"));
+$headad = implode('', file("../post/headad.txt"));
 if ($headad) {
 	fputs($fp, '<br><table border="1" cellspacing="7" cellpadding="3" width="95%" bgcolor="'.$SETTING['BBS_MENU_COLOR']."\" align=\"center\">\n <tr>\n  <td>\n");
 	fputs($fp, $headad);
@@ -52,10 +52,10 @@ $i = 1;
 foreach ($PAGEFILE as $tmp){
 	$tmpkey = str_replace(".dat", "", $tmp);
 	if ($i <= $SETTING['BBS_THREAD_NUMBER']) {
-		fputs($fp, "   <a href=\"../test/read.php/$_REQUEST[bbs]/$tmpkey/l50\" target=\"body\">$i:</a> <a href=\"#$i\">$SUBJECT[$tmp]</a>　\n");
+		fputs($fp, "   <a href=\"/post/read.php/$_REQUEST[bbs]/$tmpkey/l50\" target=\"body\">$i:</a> <a href=\"#$i\">$SUBJECT[$tmp]</a>　\n");
 	}
 	elseif ($i <= $SETTING['BBS_MAX_MENU_THREAD']) {
-		fputs($fp, "   <a href=\"../test/read.php/$_REQUEST[bbs]/$tmpkey/l50\" target=\"body\">$i: $SUBJECT[$tmp]</a>　\n");
+		fputs($fp, "   <a href=\"/post/read.php/$_REQUEST[bbs]/$tmpkey/l50\" target=\"body\">$i: $SUBJECT[$tmp]</a>　\n");
 	}
 	else break;
 	$i++;
@@ -65,7 +65,7 @@ fputs($fp, "   <div align=\"right\"><a href=\"subback.html\"><b>スレッド一�
 #--------一覧下の広告
 #--------スレッド表示
 $i = 1;
-$form_txt = implode('', file("../test/form.txt"));
+$form_txt = implode('', file("../post/form.txt"));
 $fp2  = fopen($PATH."threadconf.cgi", "r");
 $array = array();
 while ($list = fgetcsv($fp2, 1024)) {
@@ -120,9 +120,9 @@ for ($i = 1; $i < 11; $i++) {
 	if(!isset($th_titles[$i-1]) or !$th_titles[$i-1]) break;
 	list($id, $sub) = explode("<>", $th_titles[$i-1]);
 	$id = str_replace(".dat", "", $id);
-	$data .= $i.": <a href=../../test/r.php/$_REQUEST[bbs]/$id/>".rtrim($sub).'</a><br>';
+	$data .= $i.": <a href=/post/r.php/$_REQUEST[bbs]/$id/>".rtrim($sub).'</a><br>';
 }
-$data .= "<hr><a href=../../test/p.php/$_REQUEST[bbs]/$i>続き</a> <a href=../../test/b.php/$_REQUEST[bbs]/>新ｽﾚ</a></body></html>\n";
+$data .= "<hr><a href=/post/p.php/$_REQUEST[bbs]/$i>続き</a> <a href=..//post/b.php/$_REQUEST[bbs]/>新ｽﾚ</a></body></html>\n";
 $fp = fopen ($IMODEFILE, "w");
 fputs($fp, $data);
 fclose($fp);

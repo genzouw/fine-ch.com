@@ -4,7 +4,7 @@
 #====================================================
 require("passcheck.php");
 #=============================================
-$cap_file = "../test/caps.cgi";
+$cap_file = "../post/caps.cgi";
 $list = @file($cap_file);
 $fll = 0;
 if (!isset($_POST['name'])) $_POST['name'] = '';
