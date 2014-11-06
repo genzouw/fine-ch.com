@@ -12,7 +12,7 @@ $DATE = date("Y/m/d(", $NOWTIME).$wday[$today['wday']].date(") H:i:s", $NOWTIME)
 #　各種ＰＡＴＨ生成
 #====================================================
 $PATH		= "../".$_POST['bbs']."/";
-$DATPATH	= $PATH."../dat/";
+$DATPATH	= $PATH."dat/";
 $TEMPPATH	= $PATH."html/";
 $INDEXFILE	= $PATH."index.html";
 $SUBFILE	= $PATH."subback.html";
