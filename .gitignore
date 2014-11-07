@@ -1,2 +1,6 @@
 .vagrant/
 appended_disks.vdi
+board/img/*.*
+board/img2/*.*
+board/dat/*.*
+board/html/*.*

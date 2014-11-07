@@ -11,7 +11,7 @@ define('THREAD_BYTES', 524288);
 # ファイルアップ許可
 define('UPLOAD', 1);
 # GDバージョン
-define('GD_VERSION', 2);
+// define('GD_VERSION', 2);
 # アップロード上限（バイト）
 define('MAX_BYTES', 3000000);
 # サムネイル画像の幅
