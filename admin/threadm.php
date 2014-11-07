@@ -29,7 +29,7 @@ if ($SUBJECTLIST) {
 	foreach ($SUBJECTLIST as $tmp) {
 		$tmp = rtrim($tmp);
 		list($file, $value) = explode("<>", $tmp);
-		$filename = "../$_REQUEST[bbs]/dat/$file";
+		$filename = "../dat/$file";
 		if (is_file($filename)) {
 			#datが存在する場合のみ最後に追加
 			preg_match("/(\d+)/", $file, $match);
@@ -186,7 +186,7 @@ img {border:0;}
 --></style>
 </head>
 <body text="$SETTING[BBS_TEXT_COLOR]" bgcolor="$SETTING[BBS_THREAD_COLOR]" link="$SETTING[BBS_LINK_COLOR]" alink="$SETTING[BBS_ALINK_COLOR]" vlink="$SETTING[BBS_VLINK_COLOR]">
-<a href="/board/">■掲示板に戻る■</a>
+<a href="/<?php echo $_POST['bbs']; ?>/index.html">■掲示板に戻る■</a>
 <dl>
 <font size=+1 color="$SETTING[BBS_SUBJECT_COLOR]">$subject</font></b>
 EOF;

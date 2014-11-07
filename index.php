@@ -1,6 +1,6 @@
 <?php
 
-	doRedirect("./board");
+	doRedirect("./jp");
 
 	/**
 	 * リダイレクトを行う。

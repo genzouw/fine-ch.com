@@ -130,7 +130,7 @@ fclose($fp);
 if(strstr($_SERVER['HTTP_USER_AGENT'], 'DoCoMo') or
 strstr($_SERVER['HTTP_USER_AGENT'], 'J-PHONE') or
 strstr($_SERVER['HTTP_USER_AGENT'], 'UP.Browser')) {
-	header("Location: http://".$_SERVER['HTTP_HOST'].dirname(dirname($_SERVER['SCRIPT_NAME']))."/$_REQUEST[bbs]/i/");
+	header("Location: http://".$_SERVER['HTTP_HOST'].dirname(dirname($_SERVER['SCRIPT_NAME']))."/$_REQUEST[bbs]/m/");
 	exit;
 }
 setcookie ("PON", $HOST, $NOWTIME+3600*24*90, "/");

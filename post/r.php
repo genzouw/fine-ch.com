@@ -14,12 +14,12 @@ if (!empty($_SERVER['PATH_INFO'])) {
 	$bbs = $pairs[1];
 	$key = $pairs[2];
 }
-if (!file_exists("../$bbs/dat/$key.dat")) {
+if (!file_exists("../dat/$key.dat")) {
 	if (file_exists("../$bbs/kako/$key.html")) echo"過去ﾛｸﾞ倉庫です。<BR>携帯では見られません。";
 	else echo("ｽﾚｯﾄﾞが見つかりません。");
 	exit;
 }
-$log = file("../$bbs/dat/$key.dat");
+$log = file("../dat/$key.dat");
 $linenum = count($log);
 if (!empty($pairs[3])) { // レス指定情報を取得
 	if (strstr($pairs[3], "n")) {
@@ -69,7 +69,7 @@ if ($st > 1) {
 }
 else $link = '';
 ?>
-<html><head><title><?=$subject?></title></head><body><hr><?=$link?><a href=<?=$to+1?>->次</a> <a href=n>新10</a> <a href=1->1-</a> <a href=../../../../<?=$bbs?>/i/>板</a> <a href=w>ｶｷｺﾐ</a><hr><?php
+<html><head><title><?=$subject?></title></head><body><hr><?=$link?><a href=<?=$to+1?>->次</a> <a href=n>新10</a> <a href=1->1-</a> <a href=../../../../<?=$bbs?>/m/>板</a> <a href=w>ｶｷｺﾐ</a><hr><?php
 if ($nofirst != "true" or $st == 1 or strstr($pairs[3], "w")) {
 	if ($st == 1) {$st++;}
 	chop($log[0]);

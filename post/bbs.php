@@ -12,11 +12,11 @@ $DATE = date("Y/m/d(", $NOWTIME).$wday[$today['wday']].date(") H:i:s", $NOWTIME)
 #　各種ＰＡＴＨ生成
 #====================================================
 $PATH		= "../".$_POST['bbs']."/";
-$DATPATH	= $PATH."dat/";
+$DATPATH	= "../dat/";
 $TEMPPATH	= $PATH."html/";
 $INDEXFILE	= $PATH."index.html";
 $SUBFILE	= $PATH."subback.html";
-$IMODEFILE	= $PATH."i/index.html";
+$IMODEFILE	= $PATH."m/index.html";
 $IMGPATH	= $PATH."img/";
 $IMGPATH2	= $PATH."img2/";
 if (!isset($_POST['subject'])) $_POST['subject'] = '';
@@ -520,7 +520,7 @@ if (isset($_FILES['file']['name']) and $_FILES['file']['name']) {
 <html><head><title><?=$title?></title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body bgcolor="#FFFFFF">
 <font size="+1" color="#FF0000"><b><?=$topic?></b></font>
 <ul><br>ホスト<b><?=$HOST?></b><br><b><?=$_POST['subject']?> </b><br>名前： <?=$_POST['FROM']?><br>E-mail：<?=$_POST['mail']?> <br>内容：<br><?=$_POST['MESSAGE']?><br><br></ul>
-<center>こちらでリロードしてください。<a href="../<?=$_POST['bbs']?>/"> GO! </a></center></body></html>
+<center>こちらでリロードしてください。<a href="/<?=$_POST['bbs']?>/"> GO! </a></center></body></html>
 <?php
 	}
 	exit();

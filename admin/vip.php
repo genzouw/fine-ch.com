@@ -34,7 +34,7 @@ if ($SUBJECTLIST) {
 	foreach ($SUBJECTLIST as $tmp) {
 		$tmp = rtrim($tmp);
 		list($file, $value) = explode("<>", $tmp);
-		$filename = "../$_REQUEST[bbs]/dat/$file";
+		$filename = "../dat/$file";
 		if (is_file($filename)) {
 			#datが存在する場合のみ最後に追加
 			preg_match("/(\d+)/", $file, $match);

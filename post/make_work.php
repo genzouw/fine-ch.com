@@ -5,7 +5,7 @@
 #MakeWorkFile(KEY-NUMBER)
 function MakeWorkFile($bbs, $key, $outdat="") {
 	global $SETTING;
-	$dattemp = "../$bbs/dat/$key.dat";
+	$dattemp = "../dat/$key.dat";
 	$workfile = "../$bbs/html/$key.html";
 	if (is_file($dattemp)) {
 		$logopen = file($dattemp);

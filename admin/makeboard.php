@@ -6,11 +6,11 @@ require 'passcheck.php';
 if (!isset($_GET['bbs'])) $_GET['bbs'] = '';
 if (!isset($_GET['mode'])) $_GET['mode'] = '';
 $PATH = "../" . $_GET['bbs'] . '/';
-$DATPATH = $PATH . "dat/";
+$DATPATH = "../dat/";
 $TEMPPATH = $PATH . "html/";
 $INDEXFILE = $PATH . "index.html";
 $SUBFILE = $PATH . "subback.html";
-$IMODEFILE = $PATH."i/index.html";
+$IMODEFILE = $PATH."m/index.html";
 if ($_GET['bbs']) require $PATH.'config.php';
 #====================================================
 #　掲示板新規作成

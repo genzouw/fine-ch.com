@@ -42,7 +42,7 @@ $PAGEFILE = array();
 foreach($SUBJECTLIST as $tmp){
 	$tmp = rtrim($tmp);
 	list($file, $value) = explode("<>", $tmp);
-	$filename = "../$_REQUEST[bbs]/dat/$file";
+	$filename = "../dat/$file";
 	if(is_file($filename)){
 		#datが存在する場合のみ最後に追加
 		$file = str_replace('.dat', '', $file);;
@@ -114,8 +114,8 @@ if (isset($_POST['mode']) and $_POST['mode'] == "res_del" and isset($_POST['del'
 #　レス表示
 #==================================================
 if(isset($_REQUEST['mode']) and ($_REQUEST['mode'] == "view" or $_REQUEST['mode'] == "res_del")) {
-	if (!is_file("../$_REQUEST[bbs]/dat/$_REQUEST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
-	$datafile = "../$_REQUEST[bbs]/dat/$_REQUEST[key].dat";
+	if (!is_file("../dat/$_REQUEST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
+	$datafile = "../dat/$_REQUEST[key].dat";
 	$temp = file($datafile);
 	$num = count($temp);
 	if (!isset($_GET['page']) or !$_GET['page']) $_GET['page'] = 1;
@@ -243,7 +243,7 @@ for ($i = $st; $i < $st+$thread; $i++) {
 <td>
 <?php
 clearstatcache();
-if (is_writable("../$_REQUEST[bbs]/dat/$tmp.dat")) {
+if (is_writable("../dat/$tmp.dat")) {
 ?> <form action="<?=$_SERVER['PHP_SELF']?>" method="<?=$method?>">
  <select name="stopper">
 <?php foreach($stopper_array as $key=>$stopper) echo ' <option value="'.$key.'">'.$stopper."\n";?>

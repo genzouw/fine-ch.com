@@ -54,12 +54,12 @@ if (is_file($set_file)) {
 		$SETTING[$name] = $value;
 	}
 }
-if (!is_file("../$bbs/dat/$key.dat")) DispError('そんな板orスレッドないです。');
+if (!is_file("../dat/$key.dat")) DispError('そんな板orスレッドないです。');
 require "../$bbs/config.php";
 #==================================================
 #　表示範囲の決定
 #==================================================
-$LOG = file("../$bbs/dat/$key.dat");
+$LOG = file("../dat/$key.dat");
 $LINENUM = count($LOG);
 $s = 1;
 $mae = 0;
@@ -73,7 +73,7 @@ if ($ls) {
 }
 if ($s < 1) $s = 1;
 if ($s > 1) $mae = $s-1;
-$fsize = (int)(filesize("../$bbs/dat/$key.dat") / 1024);
+$fsize = (int)(filesize("../dat/$key.dat") / 1024);
 list(,,$tmp) = explode("<>", $LOG[$LINENUM-1]);
 $stop = 0;
 if (preg_match("/Over \d+ Thread|ストッパ|停止/", $tmp)) $stop = 1;
@@ -112,7 +112,7 @@ function g(key,tmp1,tmp2,xx1,xx2,xx3,len){
 </head>
 <body bgcolor="<?=$SETTING['BBS_BG_COLOR']?>" text="<?=$SETTING['BBS_TEXT_COLOR']?>" link="<?=$SETTING['BBS_LINK_COLOR']?>" alink="<?=$SETTING['BBS_ALINK_COLOR']?>" vlink="<?=$SETTING['BBS_VLINK_COLOR']?>">
 <?php readfile('headad.txt'); ?>
-<a href="/board/">■掲示板に戻る■</a>
+<a href="/<?php echo $bbs; ?>/index.html">■掲示板に戻る■</a>
 <?php
 if(!JIKAN_KISEI or ($JIKAN > JIKAN_END and $JIKAN < JIKAN_START)) {
 	echo "<a href=\"/post/read.php/$bbs/$key/\">全部</a>\n";
@@ -199,7 +199,7 @@ if ($LINENUM <= 1000) {
 }
 $t = $s + 99;
 $u = 1;
-echo "<a href=\"/board/\">掲示板に戻る</a> <a href=\"/post/read.php/$bbs/$key/\">全部</a>\n";
+echo "<a href=\"/$bbs/index.html\">掲示板に戻る</a> <a href=\"/post/read.php/$bbs/$key/\">全部</a>\n";
 if ($mae) {
 	if ($mae == 1) echo "<a href=\"/post/read.php/$bbs/$key/1\">前100</a>\n";
 	else {
