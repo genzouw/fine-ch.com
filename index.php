@@ -1,6 +1,6 @@
 <?php
 
-	doRedirect("./jp/index.php");
+	doRedirect("./jp/index.html");
 
 	/**
 	 * リダイレクトを行う。

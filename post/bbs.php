@@ -11,14 +11,13 @@ $DATE = date("Y/m/d(", $NOWTIME).$wday[$today['wday']].date(") H:i:s", $NOWTIME)
 #====================================================
 #　各種ＰＡＴＨ生成
 #====================================================
-$PATH		= "../".$_POST['bbs']."/";
 $DATPATH	= "../dat/";
-$TEMPPATH	= $PATH."html/";
+$IMGPATH	= "../img/";
+$IMGPATH2	= "../img2/";
+$PATH		= "../".$_POST['bbs']."/";
 $INDEXFILE	= $PATH."index.html";
 $SUBFILE	= $PATH."subback.html";
 $IMODEFILE	= $PATH."m/index.html";
-$IMGPATH	= $PATH."img/";
-$IMGPATH2	= $PATH."img2/";
 if (!isset($_POST['subject'])) $_POST['subject'] = '';
 if (!isset($_POST['FROM'])) $_POST['FROM'] = '';
 if (!isset($_POST['mail'])) $_POST['mail'] = '';
@@ -170,20 +169,20 @@ if ($_POST['subject']) {
 		#サブジェクトがあれば新規スレなのでキーを現在に設定
 		$_POST['key'] = time();
 		#.datファイルの設定
-		$DATAFILE = $DATPATH.$_POST['key'].".dat";
-	} while (is_file($DATAFILE)) ;
+		$dataFile = $DATPATH.$_POST['key'].".dat";
+	} while (is_file($dataFile)) ;
 }
 elseif ($_POST['key']) {
 	#キーが数字じゃない場合ばいばい！
 	if (preg_match("/\D/", $_POST['key'])) DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：キー情報が不正です！");
 	#.datファイルの設定
-	$DATAFILE = $DATPATH.$_POST['key'].".dat";
+	$dataFile = $DATPATH.$_POST['key'].".dat";
 	#.datが存在してないか書けないならばいばい
-	if (!is_writable($DATAFILE)) DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：このスレッドには書けません！");
+	if (!is_writable($dataFile)) DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：このスレッドには書けません！");
 	#.datのサイズが大きすぎる時はばいばい
-	if (filesize($DATAFILE) > THREAD_BYTES) DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：このスレッドは ".(int)(THREAD_BYTES/1024)."k を超えているので書けません！");
+	if (filesize($dataFile) > THREAD_BYTES) DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：このスレッドは ".(int)(THREAD_BYTES/1024)."k を超えているので書けません！");
 	# レスの総数を画像用カウンタに
-	$fp = fopen($DATAFILE, "r");
+	$fp = fopen($dataFile, "r");
 	while ($tmp = fgets($fp)) $imgnum++;
 	fclose($fp);
 }
@@ -397,33 +396,36 @@ $FILENUM = count($PAGEFILE);
 # 新規スレッドの場合は1個追加
 if ($_POST['subject']) $FILENUM++;
 # ログを定数に揃える
-if ($FILENUM > KEEPLOGCOUNT) {
-	for ($start = KEEPLOGCOUNT; $start < $FILENUM; $start++) {
-		$delfile = $DATPATH . $PAGEFILE[$start];
-		# datファイル削除
-		unlink($delfile);
-		$key = str_replace('.dat', '', $PAGEFILE[$start]);
-		$delfile = $TEMPPATH . $key . ".html";
-		# htmlファイル削除
-		@unlink($delfile);
-		if ($dir = @opendir($IMGPATH)) {
-			while (($file = readdir($dir)) !== false) {
-				# 画像ファイル削除
-				if (strpos($file, $key) === 0) unlink($IMGPATH.$file);
-			}  
-			closedir($dir);
-		}
-		if ($dir = @opendir($IMGPATH2)) {
-			while (($file = readdir($dir)) !== false) {
-				# サムネイル画像ファイル削除
-				if (strpos($file, $key) === 0) unlink($IMGPATH2.$file);
-			}  
-			closedir($dir);
-		}
-	}
-	$FILENUM = KEEPLOGCOUNT;
-	$PAGEFILE = array_slice($PAGEFILE, 0, $FILENUM);
+for ($start = KEEPLOGCOUNT; $start < $FILENUM; $start++) {
+    $delfile = $DATPATH . $PAGEFILE[$start];
+    # datファイル削除
+    unlink($delfile);
+    $key = str_replace('.dat', '', $PAGEFILE[$start]);
+
+    $bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
+    foreach ($bbsLocales as $locale) {
+        $tempHtmlFile = "${localeDirPath}/html/${key}.html";
+        @unlink($tempHtmlFile);
+    }
+
+    if ($dir = @opendir($IMGPATH)) {
+        while (($file = readdir($dir)) !== false) {
+            # 画像ファイル削除
+            if (strpos($file, $key) === 0) unlink($IMGPATH.$file);
+        }  
+        closedir($dir);
+    }
+    if ($dir = @opendir($IMGPATH2)) {
+        while (($file = readdir($dir)) !== false) {
+            # サムネイル画像ファイル削除
+            if (strpos($file, $key) === 0) unlink($IMGPATH2.$file);
+        }  
+        closedir($dir);
+    }
 }
+$FILENUM = KEEPLOGCOUNT;
+$PAGEFILE = array_slice($PAGEFILE, 0, $FILENUM);
+
 $subtm = "$keyfile<>$subtt";
 # サブジェクトハッシュを書き換える
 $SUBJECT[$keyfile] = $subtt;

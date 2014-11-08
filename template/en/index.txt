@@ -33,6 +33,7 @@ img {border:0;}
 <title><BBS_TITLE></title>
 </head>
 <body bgcolor="<BBS_BG_COLOR>" text="<BBS_TEXT_COLOR>" link="<BBS_LINK_COLOR>" alink="<BBS_ALINK_COLOR>" vlink="<BBS_VLINK_COLOR>" background="<BBS_BG_PICTURE>">
+<strong style="color:red">これはテストテンプレートです。（英語用）</strong>
 <center><BBS_TITLE_NAME></center>
 <table border="1" cellspacing="7" cellpadding="3" width="95%" bgcolor="<BBS_MENU_COLOR>" align="center">
  <tr>

@@ -32,7 +32,7 @@ function getCookie(key, tmp1, tmp2, xx1, xx2, xx3) {
 <tr><td><form method="post" action="./bbs.php" enctype="<?=$enctype?>">
   <table border="0" cellpadding="1" width="100%">
   <tr><td nowrap colspan="3"><font size="+1"><b><?=$SETTING['BBS_TITLE']?></b></font><br></td></tr>
-  <tr><td colspan="4"><?php readfile($PATH."head.txt"); ?><br></td></tr>
+  <tr><td colspan="4"><?php readfile("../{$SETTING['BBS_TEMPLATE_DIR']}/{$_POST['bbs']}/head.txt"); ?><br></td></tr>
   <tr><td nowrap align="right">タイトル：</td><td><input type="text" name="subject" size="40"></td><td><input type="submit" value="新規スレッド作成" name="submit"></td></tr>
   <tr>
     <td nowrap align="right">名前：</td>
