@@ -174,9 +174,12 @@ foreach ($bbsLocales as $locale) {
     $pageHtmlDir = "${localeDirPath}/html/";
     $indexFile = "${localeDirPath}/index.html";
 
-    createHtmlKakoLog($SUBFILE, $threadInfos, $SUBJECT);
+    $subbackFile	= "${localeDirPath}/subback.html";
+    $spIndexFile	= "${localeDirPath}/m/index.html";
+
+    createHtmlKakoLog($subbackFile, $threadInfos, $SUBJECT);
     createHtmlIndex($indexFile, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $pageHtmlDir, $NOWTIME, $bbs_title);
-    createHtmlIndexForSp($subjectfile, $SETTING, $IMODEFILE);
+    createHtmlIndexForSp($subjectfile, $SETTING, $spIndexFile);
 }
 
 #--------書きこみ終了画面
