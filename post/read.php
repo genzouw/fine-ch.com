@@ -1,5 +1,6 @@
 <?php
 define('VERSION', 'read.php ver2.4 2005/04/13');
+
 require 'config_r.php';
 $st = $to = 0;
 $nofirst = '';
@@ -209,7 +210,7 @@ if ($mae) {
 }
 echo "<a href=\"/post/read.php/$bbs/$key/$s-$t\">次100</a> <a href=\"/post/read.php/$bbs/$key/l50\">最新50</a><br>\n";
 if ($stop != 1) {
-	$fp  = fopen("../$bbs/threadconf.cgi", "r");
+	$fp  = fopen("../cgi/threadconf.cgi", "r");
 	while ($vip = fgetcsv($fp, 1024)) {
 		if ($vip[0] == $key) break;
 		else $vip[9] = 0;

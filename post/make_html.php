@@ -75,7 +75,7 @@ function createHtmlIndex($htmlFilePath, $threadInfos, $subject, $setting, $local
     #--------スレッド表示
     $i = 1;
     $form_txt = implode('', file("${localeTemplateDir}/form.txt"));
-    $fp2  = fopen("${localeDirPath}/threadconf.cgi", "r");
+    $fp2  = fopen("../cgi/threadconf.cgi", "r");
     $array = array();
     while ($list = fgetcsv($fp2, 1024)) {
         $vip[$list[0]] = $list;
@@ -156,7 +156,7 @@ function createHtmlIndexForSp($subjectFilePath, $setting, $imodeFile)
         $id = str_replace(".dat", "", $id);
         $data .= $i.": <a href=/post/r.php/$_REQUEST[bbs]/$id/>".rtrim($sub).'</a><br>';
     }
-    $data .= "<hr><a href=/post/p.php/$_REQUEST[bbs]/$i>続き</a> <a href=..//post/b.php/$_REQUEST[bbs]/>新ｽﾚ</a></body></html>\n";
+    $data .= "<hr><a href=/post/p.php/$_REQUEST[bbs]/$i>続き</a> <a href=\"/post/b.php/$_REQUEST[bbs]\"/>新ｽﾚ</a></body></html>\n";
     $fp = fopen ($imodeFile, "w");
     fputs($fp, $data);
     fclose($fp);
@@ -181,8 +181,8 @@ foreach ($bbsLocales as $locale) {
 
 #--------書きこみ終了画面
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
-if (strstr($userAgent, 'DoCoMo') || strstr($userAgent, 'J-PHONE') || strstr($userAgent, 'UP.Browser')) {
-    header("Location: http://".$_SERVER['HTTP_HOST'].dirname(dirname($_SERVER['SCRIPT_NAME']))."/$_REQUEST[bbs]/m/");
+if (strstr(strtolower($userAgent), 'mobile')) {
+    header("Location: /{$_REQUEST['bbs']}/m/index.html");
     exit;
 }
 

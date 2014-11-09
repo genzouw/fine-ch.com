@@ -46,12 +46,12 @@ if ($_POST['subject']) {
 	}
 	if (!NAME_774) $name_774 = '';
 	if (!FORCE_774) $force_774 = '';
-	$fp  = fopen($PATH."threadconf.cgi", "a");
+	$fp  = fopen("../cgi/threadconf.cgi", "a");
 	fwrite($fp, $_POST['key'].",".$name_774.",".$force_774.",".$force_no_id.",".$force_sage.",".$force_stars.",".$force_normal.",".$force_name.",".$force_0thello.",".$force_up."\n");
 	fclose($fp);
 }
 
-$fp  = fopen($PATH."threadconf.cgi", "r");
+$fp  = fopen("../cgi/threadconf.cgi", "r");
 while ($vip = fgetcsv($fp, 1024)) {
 	if ($vip[0] == $_POST['key']) break;
 	else $vip[0] = 0;

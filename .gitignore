@@ -1,11 +1,12 @@
 .vagrant/
 appended_disks.vdi
+cgi/*.cgi
 dat/*
+en/html/*
+en/m/*
 img/*
 img2/*
 jp/html/*
 jp/m/*
-en/html/*
-en/m/*
 vn/html/*
 vn/m/*

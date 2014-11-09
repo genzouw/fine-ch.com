@@ -118,8 +118,8 @@ if ($SETTING['BBS_OVERSEA_THREAD'] == "checked" and $_POST['subject'] and !preg_
 	DispError("ＥＲＲＯＲ！","jpドメインからスレッド立ててください");
 }
 #-------------------------------アクセス拒否リスト
-if (is_file($PATH."uerror.cgi")){
-	$IN = file($PATH."uerror.cgi");
+if (is_file("../cgi/uerror.cgi")){
+	$IN = file("../cgi/uerror.cgi");
 	foreach ($IN as $tmp){
 		$tmp = trim($tmp);
 		if (stristr($HOST, $tmp)) DispError("ＥＲＲＯＲ！","ユーザー設定が異常です！");
@@ -238,7 +238,7 @@ if (!$_POST['time']) DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：フォー
 #==================================================
 if ($_POST['subject'] and $SETTING['BBS_THREAD_TATESUGI'] >= 2) {
 	# スレ立て者のホスト名記録ファイルを読み込む（BBS_THREAD_TATESUGI個記録されている）
-	$file = $PATH."RIP.cgi";
+	$file = "../cgi/RIP.cgi";
 	$IP = array();
 	if (is_file($file)) {
 		$IP = file($file);
@@ -268,7 +268,7 @@ if (!$_COOKIE and
 #==================================================
 if ($SETTING['timecount'] >= 2) {
 	# 投稿者のホスト名記録ファイルを読み込む（timecount個記録されている）
-	$file = $PATH."timecheck.cgi";
+	$file = "../cgi/timecheck.cgi";
 	$IP = array();
 	$count = 0;
 	if (is_file($file)) {
@@ -315,8 +315,8 @@ if (preg_match("/([^\#]*)\#(.+)/", $_POST['FROM'], $match)) {
 }
 # キャップ
 if (preg_match("/([^\#]*)\#(.+)/", $_POST['mail'], $cap)) {
-	if (is_file("caps.cgi")) {
-		$fp = fopen("caps.cgi", "r");
+	if (is_file("../cgi/caps.cgi")) {
+		$fp = fopen("../cgi/caps.cgi", "r");
 		while ($cap_data = fgets($fp, 1024)) {
 			$cap_data = rtrim($cap_data);
 			list($id1,$name1,$pass1,$color1) = explode("<>", $cap_data);
@@ -359,7 +359,7 @@ $_POST['MESSAGE'] = preg_replace("/&gt;&gt;([0-9]+)\-([0-9]+)/", "<a href=\"/pos
 #　ファイル操作（ホスト記録）
 #====================================================
 # .datファイルはmonazilla関係で丸見えなので別にホスト記録用ログファイルを用意
-$fp = fopen($PATH."hostlog.cgi", "a");
+$fp = fopen("../cgi/hostlog.cgi", "a");
 flock($fp, 2);
 fwrite($fp, "$_POST[FROM]<>$_POST[mail]<>$DATE $idcrypt<>".substr(strip_tags($_POST['MESSAGE']), 0, 30)."<>$_POST[subject]<>$HOST<>$_SERVER[REMOTE_ADDR]<>\n");
 fclose($fp);
