@@ -369,16 +369,19 @@ fclose($fp);
 $outdat = "$_POST[FROM]<>$_POST[mail]<>$DATE_ID <> $_POST[MESSAGE] <>$_POST[subject]\n";
 # $outdatの追加とhtmlファイルの作成（戻り値は"サブジェクト名 (レスの総数)"）
 require 'make_work.php';
-$subtt = MakeWorkFile($_POST['bbs'], $_POST['key'], $outdat);
+
+$bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
+$subtt = MakeWorkFile($bbsLocales, $_POST['key'], $outdat);
+
 #====================================================
 #　ファイル操作（subject.txt）
 #====================================================
-$subjectfile = $PATH."subject.txt";
+$subjectfile = "${DATPATH}subject.txt";
 $keyfile = $_POST['key'].".dat";
-$PAGEFILE = array();
+$threadInfos = array();
 # サブジェクトファイルを読み込む
 # スレッドキー.dat<>タイトル (レスの数)\n
-# $PAGEFILE = array('スレッドキー.dat',・・・)
+# $threadInfos = array('スレッドキー.dat',・・・)
 # $SUBJECT = array('スレッドキー.dat'=>'タイトル (レスの数)',・・・)
 $subr = @file($subjectfile);
 if ($subr) {
@@ -387,23 +390,23 @@ if ($subr) {
 		list($file, $value) = explode("<>", $tmp);
 		if (!$file) break;
 		$filename = $DATPATH . $file;
-		array_push($PAGEFILE,$file);
+		array_push($threadInfos,$file);
 		$SUBJECT[$file] = $value;
 	}
 }
 # サブジェクト数を取得
-$FILENUM = count($PAGEFILE);
+$FILENUM = count($threadInfos);
 # 新規スレッドの場合は1個追加
 if ($_POST['subject']) $FILENUM++;
 # ログを定数に揃える
 for ($start = KEEPLOGCOUNT; $start < $FILENUM; $start++) {
-    $delfile = $DATPATH . $PAGEFILE[$start];
+    $delfile = $DATPATH . $threadInfos[$start];
     # datファイル削除
     unlink($delfile);
-    $key = str_replace('.dat', '', $PAGEFILE[$start]);
+    $key = str_replace('.dat', '', $threadInfos[$start]);
 
-    $bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
     foreach ($bbsLocales as $locale) {
+        $localeDirPath	= "../${locale}";
         $tempHtmlFile = "${localeDirPath}/html/${key}.html";
         @unlink($tempHtmlFile);
     }
@@ -424,7 +427,7 @@ for ($start = KEEPLOGCOUNT; $start < $FILENUM; $start++) {
     }
 }
 $FILENUM = KEEPLOGCOUNT;
-$PAGEFILE = array_slice($PAGEFILE, 0, $FILENUM);
+$threadInfos = array_slice($threadInfos, 0, $FILENUM);
 
 $subtm = "$keyfile<>$subtt";
 # サブジェクトハッシュを書き換える
@@ -434,7 +437,7 @@ $fp = @fopen($subjectfile, "w");
 #一括書き込み
 # sageの時は上がらない
 if (!$_POST['subject'] and ($sage or strstr($_POST['mail'], 'sage'))) {
-	foreach ($PAGEFILE as $tmp){
+	foreach ($threadInfos as $tmp){
 		fputs($fp, "$tmp<>$SUBJECT[$tmp]\n");
 	}
 }
@@ -443,7 +446,7 @@ else {
 	$temp[0] = $keyfile;
 	$i = 1;
 	fputs($fp, "$subtm\n");
-	foreach ($PAGEFILE as $tmp) {
+	foreach ($threadInfos as $tmp) {
 		# keyfileは現在書き込みしたスレッドキー（上がっている）
 		if ($tmp != $keyfile) {
 			$temp[$i] = $tmp;
@@ -451,7 +454,7 @@ else {
 			fputs($fp, "$tmp<>$SUBJECT[$tmp]\n");
 		}
 	}
-	$PAGEFILE = $temp;
+	$threadInfos = $temp;
 }
 fclose($fp);
 #====================================================

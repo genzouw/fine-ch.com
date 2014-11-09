@@ -3,10 +3,9 @@
 #　ファイル操作（ＨＴＭＬ作成用作業ファイル更新）
 #====================================================
 #MakeWorkFile(KEY-NUMBER)
-function MakeWorkFile($bbs, $key, $outdat="") {
+function MakeWorkFile($locales, $key, $outdat="") {
 	global $SETTING;
 	$dattemp = "../dat/$key.dat";
-	$workfile = "../$bbs/html/$key.html";
 	if (is_file($dattemp)) {
 		$logopen = file($dattemp);
 		$lognum = count($logopen);
@@ -98,9 +97,13 @@ function MakeWorkFile($bbs, $key, $outdat="") {
 		$logall .= "<br>\n";
 		$topnum++;
 	}
-	$fp = fopen($workfile, "w");
-	fputs($fp, $logall);
-	fclose($fp);
+
+    foreach ($locales as $locale) {
+        $workfile = "../${locale}/html/$key.html";
+        $fp = fopen($workfile, "w");
+        fputs($fp, $logall);
+        fclose($fp);
+    }
 	return "$logsub ($lognum)";
 }
 ?>

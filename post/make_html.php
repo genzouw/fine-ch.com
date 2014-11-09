@@ -4,13 +4,13 @@ define('VERSION', '2005/04/23');
 /**
  * 過去ログメニューをかーくー
  */
-function createHtmlKakoLog($htmlFilePath, $pageFile, $subject)
+function createHtmlKakoLog($htmlFilePath, $threadInfos, $subject)
 {
     $fp = @fopen($htmlFilePath, "w");
     if (!$fp) exit;
     fputs($fp, '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="pragma" content="no-cache"><meta http-equiv="Cache-Control" content="no-cache"></head><body><font size="2">');
     $count = 0;
-    foreach ($pageFile as $tmp) {
+    foreach ($threadInfos as $tmp) {
         $count++;
         $dat = str_replace(".dat", "", $tmp);
         fputs($fp, "<a href=\"/post/read.php/$_REQUEST[bbs]/$dat/l50\">$count: $subject[$tmp]</a><br>\n");
@@ -23,7 +23,7 @@ function createHtmlKakoLog($htmlFilePath, $pageFile, $subject)
 /**
  * index.html出力処理
  */
-function createHtmlIndex($htmlFilePath, $pageFile, $subject, $setting, $locale, $localeDirPath, $tempPath, $nowtime, $bbs_title)
+function createHtmlIndex($htmlFilePath, $threadInfos, $subject, $setting, $locale, $localeDirPath, $pageHtmlDir, $nowtime, $bbs_title)
 {
     $localeTemplateDir = "../{$setting['BBS_TEMPLATE_DIR']}/${locale}";
 
@@ -60,12 +60,12 @@ function createHtmlIndex($htmlFilePath, $pageFile, $subject, $setting, $locale, 
         . '<td><font size="2">';
     fputs($fp, $menu);
     $i = 1;
-    foreach ($pageFile as $tmp) {
-        $tmpkey = str_replace(".dat", "", $tmp);
+    foreach ($threadInfos as $tmp) {
+        $threadKey = str_replace(".dat", "", $tmp);
         if ($i <= $setting['BBS_THREAD_NUMBER']) {
-            fputs($fp, "   <a href=\"/post/read.php/$_REQUEST[bbs]/$tmpkey/l50\" target=\"body\">$i:</a> <a href=\"#$i\">$subject[$tmp]</a>　\n");
+            fputs($fp, "   <a href=\"/post/read.php/$_REQUEST[bbs]/$threadKey/l50\" target=\"body\">$i:</a> <a href=\"#$i\">$subject[$tmp]</a>　\n");
         } elseif ($i <= $setting['BBS_MAX_MENU_THREAD']) {
-            fputs($fp, "   <a href=\"/post/read.php/$_REQUEST[bbs]/$tmpkey/l50\" target=\"body\">$i: $subject[$tmp]</a>　\n");
+            fputs($fp, "   <a href=\"/post/read.php/$_REQUEST[bbs]/$threadKey/l50\" target=\"body\">$i: $subject[$tmp]</a>　\n");
         } else break;
         $i++;
     }
@@ -81,26 +81,26 @@ function createHtmlIndex($htmlFilePath, $pageFile, $subject, $setting, $locale, 
         $vip[$list[0]] = $list;
     }
     fclose($fp2);
-    foreach ($pageFile as $tmp) {
-        $tmpkey = str_replace(".dat", "", $tmp);
+    foreach ($threadInfos as $tmp) {
+        $threadKey = str_replace(".dat", "", $tmp);
         $enctype = 'application/x-www-form-urlencoded';
         $file_form = '';
-        if (UPLOAD or $vip[$tmpkey][9]) {
+        if (UPLOAD or $vip[$threadKey][9]) {
             $enctype = 'multipart/form-data';
             $file_form = '<input type=file name=file size=50><br>';
         }
 
         
-        if (!dir($tempPath)) {
-            mkdir($tempPath, 777, true);
+        if (!dir($pageHtmlDir)) {
+            mkdir($pageHtmlDir, 777, true);
         }
 
-        $filePath = "${tempPath}${tmpkey}.html";
-        if (!file_exists($filePath)) {
+        $pageHtmlFile = "${pageHtmlDir}${threadKey}.html";
+        if (!file_exists($pageHtmlFile)) {
             continue;
         }
 
-        $log = file($filePath);
+        $log = file($pageHtmlFile);
 
         if ($i == 1) {
             $j = ($count_end <= $setting['BBS_THREAD_NUMBER']) ? $count_end : $setting['BBS_THREAD_NUMBER'];
@@ -108,7 +108,7 @@ function createHtmlIndex($htmlFilePath, $pageFile, $subject, $setting, $locale, 
             $j = $i - 1;
         }
 
-        if (count($pageFile) == $i) {
+        if (count($threadInfos) == $i) {
             $k = 1;
         } elseif ($i >=  $setting['BBS_THREAD_NUMBER']) {
             $k = 1;
@@ -125,7 +125,7 @@ function createHtmlIndex($htmlFilePath, $pageFile, $subject, $setting, $locale, 
             fputs($fp, $loglist);
         }
         $form = str_replace('<BBS>', $locale, $form_txt);
-        $form = str_replace('<KEY>', $tmpkey, $form);
+        $form = str_replace('<KEY>', $threadKey, $form);
         $form = str_replace('<TIME>', $nowtime, $form);
         $form = str_replace('<PATH>', "${localeDirPath}/", $form);
         $form = str_replace('<ENCTYPE>', $enctype, $form);
@@ -162,6 +162,7 @@ function createHtmlIndexForSp($subjectFilePath, $setting, $imodeFile)
     fclose($fp);
 }
 
+// メイン処理
 $bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
 foreach ($bbsLocales as $locale) {
     $localeDirPath	= "../${locale}";
@@ -170,11 +171,11 @@ foreach ($bbsLocales as $locale) {
         mkdir($localeDirPath, 777, true);
     }
 
-    $tempPath	= "${localeDirPath}/html/";
-    $indexFile	= "${localeDirPath}/index.html";
+    $pageHtmlDir = "${localeDirPath}/html/";
+    $indexFile = "${localeDirPath}/index.html";
 
-    createHtmlKakoLog($SUBFILE, $PAGEFILE, $SUBJECT);
-    createHtmlIndex($indexFile, $PAGEFILE, $SUBJECT, $SETTING, $locale, $localeDirPath, $tempPath, $NOWTIME, $bbs_title);
+    createHtmlKakoLog($SUBFILE, $threadInfos, $SUBJECT);
+    createHtmlIndex($indexFile, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $pageHtmlDir, $NOWTIME, $bbs_title);
     createHtmlIndexForSp($subjectfile, $SETTING, $IMODEFILE);
 }
 
