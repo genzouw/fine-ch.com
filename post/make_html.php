@@ -16,7 +16,7 @@ foreach ($bbsLocales as $locale) {
     $indexFile = "${localeDirPath}/index.html";
 
     $subbackFile	= "${localeDirPath}/subback.html";
-    $spIndexFile	= "${localeDirPath}/m/index.html";
+    // $spIndexFile	= "${localeDirPath}/m/index.html";
 
     createHtmlKakoLog($subbackFile, $threadInfos, $SUBJECT, $locale);
     createHtmlIndex($indexFile, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $pageHtmlDir, $NOWTIME, $bbs_title);
