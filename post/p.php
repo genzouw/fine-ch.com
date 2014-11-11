@@ -1,6 +1,6 @@
 <?php
 $version = "p.php ver1.3 (2005/03/28)";
-$th_count = 5; // 1画面に表示するスレッドの数。
+$th_count = 10; // 1画面に表示するスレッドの数。
 #==================================================
 #　リクエスト解析
 #==================================================
@@ -14,20 +14,33 @@ if(!empty($_SERVER['PATH_INFO'])){
 	$bbs = $pairs[1];
 	if(!is_dir("../$bbs")) {echo("そんな板ないです。");exit;}
 	$st = $pairs[2];
-	if (!preg_match("/^\d+$/", $st)) {$st = 1;}
+	if (!preg_match("/^\d+$/", $st)) {$st = 0;}
 }
-if (!is_file("../".$bbs."/subject.txt")) {echo("そんな板ないです。");exit;}
-$th_titles = file("../".$bbs."/subject.txt");
-$end = count($th_titles);
+if (!is_file("../dat/subject.txt")) {echo("そんな板ないです。");exit;}
+$th_titles = file("../dat/subject.txt");
+$end = count($th_titles) -1;
 if ($st > $end) {$st = $end;}
 $mae = $st - $th_count;
 if ($mae <= 0) {$mae = 1;}
 $tugi = $st + $th_count;
 if ($tugi > $end + 1) {$tugi = $end + 1;}
-?><HTML><HEAD><BASE href=<?=$url.'/post/r.php/'.$bbs?>/><TITLE><?=$bbs?> スレッド一覧</TITLE></HEAD><BODY><A href=../../p.php/<?=$bbs?>/<?=$mae?>>前</A> <A href=../../p.php/<?=$bbs?>/<?=$tugi?>>次</A><HR><?php
-for ($i = $st; $i < $tugi; $i++) {
-	list($id, $sub) = explode("<>", $th_titles[$i-1]);
-	$id = str_replace(".dat", "", $id);
-	echo $i,': <A href=',$id,'/>',$sub,'</A><BR>';
+
+define('VERSION', '2005/04/23');
+
+require __DIR__ . '/init.php';
+require __DIR__ . '/functions.php';
+
+loadSetting( $bbs );
+
+// メイン処理
+$locale = $bbs;
+$localeDirPath	= "../${locale}";
+
+if (!is_dir($localeDirPath)) {
+    mkdir($localeDirPath, 777, true);
 }
-?><HR><A href=../../p.php/<?=$bbs?>/<?=$mae?>>前</A> <A href=../../p.php/<?=$bbs?>/<?=$tugi?>>次</A><HR><?=$version?></BODY></HTML>
+
+$spIndexFile	= "php://output";
+
+createHtmlIndexForSp($spIndexFile, $subjectfile, $SETTING, $locale, $st);
+

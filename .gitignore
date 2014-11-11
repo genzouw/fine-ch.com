@@ -2,6 +2,9 @@
 appended_disks.vdi
 cgi/*.cgi
 dat/*
+jp/*.html
+en/*.html
+vn/*.html
 en/html/*
 en/m/*
 img/*

@@ -144,7 +144,7 @@ if ($vip[6] == 0) {
 if (isset($_FILES['file']) and $_FILES['file']['name'] and (UPLOAD or $upload)) {
 	if (filesize($_FILES['file']['tmp_name']) > MAX_BYTES) DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：ファイルが大きすぎます。。。");
 	# アンカー用のパス
-	$a_path = "/";
+	$a_path = "../";
 	# GD fuction のチェック
 	$gifread = '';
 	if (GD_VERSION == 2) {

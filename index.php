@@ -19,7 +19,7 @@
         }
     }
 
-    doRedirect("/${selectedLang}/index.html");
+    doRedirect("./${selectedLang}/index.html");
 
     /**
 	 * リダイレクトを行う。

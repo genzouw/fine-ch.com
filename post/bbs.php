@@ -1,44 +1,20 @@
 <?php
-$HOST = gethostbyaddr($_SERVER['REMOTE_ADDR']);
-#====================================================
-#　日付・時刻を設定
-#====================================================
-$NOWTIME = time();
-$wday = array('日','月','火','水','木','金','土');
-$today = getdate($NOWTIME);
-$JIKAN = $today['hours'];
-$DATE = date("Y/m/d(", $NOWTIME).$wday[$today['wday']].date(") H:i:s", $NOWTIME);
-#====================================================
-#　各種ＰＡＴＨ生成
-#====================================================
-$DATPATH	= "../dat/";
-$IMGPATH	= "../img/";
-$IMGPATH2	= "../img2/";
-$PATH		= "../".$_POST['bbs']."/";
-$INDEXFILE	= $PATH."index.html";
+require __DIR__ . '/init.php';
+
 if (!isset($_POST['subject'])) $_POST['subject'] = '';
 if (!isset($_POST['FROM'])) $_POST['FROM'] = '';
 if (!isset($_POST['mail'])) $_POST['mail'] = '';
 if (!isset($_POST['bbs'])) $_POST['bbs'] = '';
 if (!isset($_POST['key'])) $_POST['key'] = '';
 if (!isset($_POST['MESSAGE'])) $_POST['MESSAGE'] = '';
-#====================================================
-#　初期情報の取得（設定ファイル）
-#====================================================
-#設定ファイルを読む
-$set_file = $PATH . "SETTING.TXT";
-if (is_file($set_file)) {
-	$set_str = file($set_file);
-	foreach ($set_str as $tmp){
-		$tmp = trim($tmp);
-		list ($name, $value) = explode("=", $tmp);
-		$SETTING[$name] = $value;
-	}
-} else {
-	DispError("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！$PATH");
-}
+
+$PATH		= "../".$_POST['bbs']."/";
+$INDEXFILE	= $PATH."index.html";
 
 require $PATH.'config.php';
+
+loadSetting( $_POST['bbs'] );
+
 #====================================================
 #　入力情報を取得（ＰＯＳＴ）
 #====================================================
@@ -374,7 +350,6 @@ $subtt = MakeWorkFile($bbsLocales, $_POST['key'], $outdat);
 #====================================================
 #　ファイル操作（subject.txt）
 #====================================================
-$subjectfile = "${DATPATH}subject.txt";
 $keyfile = $_POST['key'].".dat";
 $threadInfos = array();
 # サブジェクトファイルを読み込む

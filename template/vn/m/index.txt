@@ -1,0 +1,16 @@
+<html>
+<head>
+	<base url="" />
+	<title><BBS> スレッド一覧</title>
+</head>
+<body>
+	<hr>
+	<PUTAD>
+	<hr>
+	<CUT>
+	<hr>
+	<a href="../../../post/p.php/<BBS>/m/<PREV>">前</a> <a href="../../../post/p.php/<BBS>/m/<NEXT>">続</a> <a href="../../../post/b.php/<BBS>/m"/>新ｽﾚ</a>
+	<BBS>
+	<VERSION>
+</body>
+</html>

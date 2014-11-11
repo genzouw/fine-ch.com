@@ -85,6 +85,7 @@ if (GZ_FLAG) ob_start("ob_gzhandler");
 ?>
 <html>
 <head>
+<base href="../../../">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><?=$subject?></title>
 <script type="text/javascript"><!--
@@ -113,14 +114,14 @@ function g(key,tmp1,tmp2,xx1,xx2,xx3,len){
 </head>
 <body bgcolor="<?=$SETTING['BBS_BG_COLOR']?>" text="<?=$SETTING['BBS_TEXT_COLOR']?>" link="<?=$SETTING['BBS_LINK_COLOR']?>" alink="<?=$SETTING['BBS_ALINK_COLOR']?>" vlink="<?=$SETTING['BBS_VLINK_COLOR']?>">
 <?php readfile("../{$SETTING['BBS_TEMPLATE_DIR']}/${bbs}/headad.txt"); ?>
-<a href="/<?php echo $bbs; ?>/index.html">■掲示板に戻る■</a>
+<a href="../<?php echo $bbs; ?>/index.html">■掲示板に戻る■</a>
 <?php
 if(!JIKAN_KISEI or ($JIKAN > JIKAN_END and $JIKAN < JIKAN_START)) {
-	echo "<a href=\"/post/read.php/$bbs/$key/\">全部</a>\n";
+	echo "<a href=\"../post/read.php/$bbs/$key/\">全部</a>\n";
 }
 for ($iCnt = 1; $iCnt <= $LINENUM; $iCnt += 100){
 	$iTo = $iCnt + 99;
-	echo "<a href=\"/post/read.php/$bbs/$key/$iCnt-$iTo\">$iCnt-</a>\n";
+	echo "<a href=\"../post/read.php/$bbs/$key/$iCnt-$iTo\">$iCnt-</a>\n";
 }
 $red_num = (int)(THREAD_RES*19/20);
 $yellow_num = (int)(THREAD_RES*9/10);
@@ -139,7 +140,7 @@ elseif ($fsize >= 480){
 	$alert = '<p><table><tr><td bgcolor=red><font color=white>サイズが 480KB を超えています。500KB を超えると書きこめなくなるよ。</font></td></tr></table>';
 }
 ?>
-<a href="/post/read.php/<?=$bbs."/".$key?>/l50">最新50</a>
+<a href="../post/read.php/<?=$bbs."/".$key?>/l50">最新50</a>
 <?=$alert?>
 <p><font size="+1" color="<?=$SETTING['BBS_SUBJECT_COLOR']?>"><?=$subject?></font><dl>
 <?php
@@ -195,20 +196,20 @@ while ($s <= $END) {
 }
 echo "</dl><font color=\"red\" face=\"arial\"><b>$fsize KB</b></font><hr>\n";
 if ($LINENUM <= 1000) {
-	if ($LINENUM >= $s) echo "<center><a href=\"/post/read.php/$bbs/$key/$END-\">続きを読む</a></center><hr>\n";
-	else echo "<center><a href=\"/post/read.php/$bbs/$key/$LINENUM-\">新着レスの表示</a></center><hr>\n";
+	if ($LINENUM >= $s) echo "<center><a href=\"../post/read.php/$bbs/$key/$END-\">続きを読む</a></center><hr>\n";
+	else echo "<center><a href=\"../post/read.php/$bbs/$key/$LINENUM-\">新着レスの表示</a></center><hr>\n";
 }
 $t = $s + 99;
 $u = 1;
-echo "<a href=\"/$bbs/index.html\">掲示板に戻る</a> <a href=\"/post/read.php/$bbs/$key/\">全部</a>\n";
+echo "<a href=\"../$bbs/index.html\">掲示板に戻る</a> <a href=\"../post/read.php/$bbs/$key/\">全部</a>\n";
 if ($mae) {
-	if ($mae == 1) echo "<a href=\"/post/read.php/$bbs/$key/1\">前100</a>\n";
+	if ($mae == 1) echo "<a href=\"../post/read.php/$bbs/$key/1\">前100</a>\n";
 	else {
 		if ($mae > 100) $u = $mae-99;
-		echo "<a href=\"/post/read.php/$bbs/$key/$u-$mae\">前100</a>\n";
+		echo "<a href=\"../post/read.php/$bbs/$key/$u-$mae\">前100</a>\n";
 	}
 }
-echo "<a href=\"/post/read.php/$bbs/$key/$s-$t\">次100</a> <a href=\"/post/read.php/$bbs/$key/l50\">最新50</a><br>\n";
+echo "<a href=\"../post/read.php/$bbs/$key/$s-$t\">次100</a> <a href=\"../post/read.php/$bbs/$key/l50\">最新50</a><br>\n";
 if ($stop != 1) {
 	$fp  = fopen("../cgi/threadconf.cgi", "r");
 	while ($vip = fgetcsv($fp, 1024)) {
@@ -218,7 +219,7 @@ if ($stop != 1) {
 	fclose($fp);
 	if (UPLOAD or $vip[9]) {
 		?>
-<form method="post" action="/post/bbs.php" enctype="multipart/form-data">
+<form method="post" action="../post/bbs.php" enctype="multipart/form-data">
 <input type="submit" value="書き込む" name="submit">
 名前： <input name="FROM" size="19">
 E-mail<font size="1"> (省略可) </font>: <input name="mail" size="19"><br>
@@ -232,7 +233,7 @@ E-mail<font size="1"> (省略可) </font>: <input name="mail" size="19"><br>
 	}
 	else {
 		?>
-<form method="post" action="/post/bbs.php">
+<form method="post" action="../post/bbs.php">
 <input type="submit" value="書き込む" name="submit">
 名前： <input name="FROM" size="19">
 E-mail<font size="1"> (省略可) </font>: <input name="mail" size="19"><br>
