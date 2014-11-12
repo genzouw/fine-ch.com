@@ -6,28 +6,35 @@ require __DIR__ . '/functions.php';
 // メイン処理
 $bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
 foreach ($bbsLocales as $locale) {
-    $localeDirPath	= "../${locale}";
-
+    $localeDirPath = "../${locale}";
     if (!is_dir($localeDirPath)) {
         mkdir($localeDirPath, 777, true);
     }
 
-    $pageHtmlDir = "${localeDirPath}/html/";
-    $indexFile = "${localeDirPath}/index.html";
+    $spLocaleDirPath = "../${locale}/m";
+    if (!is_dir($spLocaleDirPath)) {
+        mkdir($spLocaleDirPath, 777, true);
+    }
 
-    $subbackFile	= "${localeDirPath}/subback.html";
-    // $spIndexFile	= "${localeDirPath}/m/index.html";
-
+    $subbackFile = "${localeDirPath}/subback.html";
     createHtmlKakoLog($subbackFile, $threadInfos, $SUBJECT, $locale);
-    createHtmlIndex($indexFile, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $pageHtmlDir, $NOWTIME, $bbs_title);
+
+    $htmlFilePath = "${localeDirPath}/index.html";
+    $localeTemplateDir = "../{$SETTING['BBS_TEMPLATE_DIR']}/${locale}";
+    createHtmlIndex($htmlFilePath, $localeTemplateDir, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $NOWTIME, $bbs_title);
+
+    $spHtmlFilePath = "${spLocaleDirPath}/index.html";
+    $spLocaleTemplateDir = "../{$SETTING['BBS_TEMPLATE_DIR']}/${locale}/m";
+    createHtmlIndex($spHtmlFilePath, $spLocaleTemplateDir, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $NOWTIME, $bbs_title, true);
     // createHtmlIndexForSp($spIndexFile, $subjectfile, $SETTING, $locale);
 }
 
 #--------書きこみ終了画面
 $userAgent = $_SERVER['HTTP_USER_AGENT'];
-if (strstr(strtolower($userAgent), 'mobile')) {
-    header("Location: ../post/p.php/{$_REQUEST['bbs']}/");
-    exit;
+if (strstr(strtolower($userAgent), 'mobile') || (isset($_POST['sp']) && $_POST['sp'] == 'm')) {
+    // header("Location: ../{$_REQUEST['bbs']}/m/index.html");
+    // exit;
+    $INDEXFILE = "../{$_REQUEST['bbs']}/m/index.html";
 }
 
 setcookie ("PON", $HOST, $NOWTIME+3600*24*90, "/");

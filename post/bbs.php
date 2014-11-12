@@ -475,6 +475,9 @@ function DispError($title, $topic = "") {
     <input type="hidden" NAME="mail"  value="<?=$mml?>">
     <input type="hidden" name="MESSAGE" value="<?=$msg?>"></ul>
     <input type="hidden" name="bbs" value="<?=$_POST['bbs']?>">
+    <?php if ($_POST['sp'] == 'm') { ?>
+    <input type="hidden" name="sp" value="m">
+    <?php } ?>
     <input type="hidden" name="time" value="<?=$_POST['time']?>">
     <input type="hidden" name="key" value="<?=$_POST['key']?>">
 

@@ -21,9 +21,9 @@ function createHtmlKakoLog($htmlFilePath, $threadInfos, $subject, $locale)
 /**
  * index.html出力処理
  */
-function createHtmlIndex($htmlFilePath, $threadInfos, $subject, $setting, $locale, $localeDirPath, $pageHtmlDir, $nowtime, $bbs_title)
+function createHtmlIndex($htmlFilePath, $localeTemplateDir, $threadInfos, $subject, $setting, $locale, $localeDirPath, $nowtime, $bbs_title, $sp = false)
 {
-    $localeTemplateDir = "../{$setting['BBS_TEMPLATE_DIR']}/${locale}";
+    $pageHtmlDir = "${localeDirPath}/html/";
 
     $fp = fopen($htmlFilePath, "w");
     #--------ヘッダ＆上の広告
@@ -68,7 +68,10 @@ function createHtmlIndex($htmlFilePath, $threadInfos, $subject, $setting, $local
         $i++;
     }
     $count_end = --$i;
-    fputs($fp, "   <div align=\"right\"><a href=\"subback.html\"><b>スレッド一覧はこちら</b></a></div>\n  </td>\n </tr>\n</table><br>\n");
+    if (!$sp) {
+        fputs($fp, "   <div align=\"right\"><a href=\"subback.html\"><b>スレッド一覧はこちら</b></a></div>\n");
+    }
+    fputs($fp, "   </td>\n </tr>\n</table><br>\n");
     #--------一覧下の広告
     #--------スレッド表示
     $i = 1;

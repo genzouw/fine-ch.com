@@ -53,6 +53,9 @@ function getCookie(key, tmp1, tmp2, xx1, xx2, xx3) {
     <textarea rows="5" cols="60" wrap="off" name="MESSAGE"></textarea><br>
     <?=$file_form?>
     <input type="hidden" name="bbs" value="<?=$_POST['bbs']?>">
+    <?php if ($_POST['sp'] == 'm') { ?>
+    <input type="hidden" name="sp" value="m">
+    <?php } ?>
     <input type="hidden" name="time" value="<?=$NOWTIME?>">
     </td>
   </tr>
