@@ -216,7 +216,7 @@ if ($mae) {
 }
 echo "<a href=\"../post/read.php/$urlDirs/$key/$s-$t\">次100</a> <a href=\"../post/read.php/$urlDirs/$key/l50\">最新50</a><br>\n";
 if ($stop != 1) {
-	$fp  = fopen("../cgi/threadconf.cgi", "r");
+	$fp  = fopen("../${bbs}/cgi/threadconf.cgi", "r");
 	while ($vip = fgetcsv($fp, 1024)) {
 		if ($vip[0] == $key) break;
 		else $vip[9] = 0;

@@ -76,7 +76,7 @@ function createHtmlIndex($htmlFilePath, $localeTemplateDir, $threadInfos, $subje
     #--------スレッド表示
     $i = 1;
     $form_txt = implode('', file("${localeTemplateDir}/form.txt"));
-    $fp2  = fopen("../cgi/threadconf.cgi", "r");
+    $fp2  = fopen("${localeDirPath}/cgi/threadconf.cgi", "r");
     $array = array();
     while ($list = fgetcsv($fp2, 1024)) {
         $vip[$list[0]] = $list;

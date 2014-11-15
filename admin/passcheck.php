@@ -81,6 +81,11 @@ else {
 新しいパスワードを入力してください。<br>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
 <input type="password" name="setpass" >
+<select name="bbs" id="bbs">
+    <option value="jp">jp</option>
+    <option value="en">en</option>
+    <option value="vn">vn</option>
+</select>
 <input type="submit" value="登録">
 </form>
 </div>

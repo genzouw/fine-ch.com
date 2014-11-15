@@ -6,7 +6,9 @@ $comment = '<br>';
 #　初期情報の取得（設定ファイル）
 #====================================================
 #設定ファイルを読む
-$set_pass = "../$_REQUEST[bbs]/SETTING.TXT";
+$bbs = isset($_REQUEST['bbs']) ? $_REQUEST['bbs'] : 'jp';
+
+$set_pass = "../${bbs}/SETTING.TXT";
 if (is_file($set_pass)) {
 	$set_str = file ($set_pass);
 	foreach ($set_str as $tmp){
@@ -17,7 +19,7 @@ if (is_file($set_pass)) {
 }
 else disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！");
 $threadconf = array();
-$fp = fopen("../$_REQUEST[bbs]/threadconf.cgi", "r");
+$fp = fopen("../${bbs}/cgi/threadconf.cgi", "r");
 while ($list = fgetcsv($fp, 1024)) {
 	$threadconf[$list[0]] = $list;
 }
@@ -25,7 +27,7 @@ while ($list = fgetcsv($fp, 1024)) {
 #　ファイル操作（サブジェクトファイル読み込み）
 #==================================================
 #サブジェクトファイルを読み込む
-$subfile = "../$_REQUEST[bbs]/subject.txt";
+$subfile = "../dat/subject.txt";
 #サブジェクトファイルを読み込む
 $SUBJECTLIST = @file($subfile);
 #サブジェクト内容をハッシュに格納
@@ -48,7 +50,7 @@ if ($SUBJECTLIST) {
 #　設定変更
 #==================================================
 if (isset($_POST['mode']) and $_POST['mode'] == "set") {
-	$target = "../$_POST[bbs]/dat/$_POST[key].dat";
+	$target = "../dat/$_POST[key].dat";
 	if (!is_file($target)) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
 	if (!isset($_POST['name_774'])) $_POST['name_774'] = '';
 	if (!isset($_POST['force_774'])) $_POST['force_774'] = '';
@@ -71,7 +73,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "set") {
 	$threadconf[$_POST['key']][8] = $_POST['zerothello'];
 	$threadconf[$_POST['key']][9] = $_POST['up'];
 	$threadconf[$_POST['key']][10] = $_POST['maxmsg'];
-	$fp = fopen("../$_POST[bbs]/threadconf.cgi", "w");
+	$fp = fopen("../${bbs}/cgi/threadconf.cgi", "w");
 	foreach($threadconf as $tmp) {
 		fwrite($fp, implode(',', $tmp)."\n");
 	}
@@ -89,10 +91,27 @@ $st = ($_GET['page'] - 1) * $thread;
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="main.css" type="text/css">
 <title>VIP機能変更</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 <body>
 <h1 class="title"><?=$SETTING['BBS_TITLE']?></h1>
 <h3>VIP機能変更</h3>
+
+<form action="?">
+	<select name="bbs" id="bbs">
+		<option value="jp">jp</option>
+		<option value="en">en</option>
+		<option value="vn">vn</option>
+	</select>
+</form>
+<script>
+$(function() {
+	$("#bbs").on("change", function(e) {
+		$(this).parents('form').submit();
+	}).val("<?php echo "${bbs}"; ?>");
+});
+</script>
+
 <hr>
 <?=$comment?>
 <br>
@@ -102,7 +121,7 @@ $total = count($PAGEFILE) + $thread - 1;
 $total_page = (int)($total/$thread);
 for ($i = 1; $i <= $total_page; $i++) {
 	if ($i == $_GET['page']) echo " $i \n";
-	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;page=$i\">$i</a> \n";
+	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=${bbs}&amp;page=$i\">$i</a> \n";
 }
 ?>
 <table border="1" cellspacing="0" cellpadding="2">
@@ -115,7 +134,7 @@ for ($i = $st; $i < $st+$thread; $i++) {
 	?>
 <tr>
 <form action="<?=$_SERVER['PHP_SELF']?>" method="POST">
-<td> <a class="item" href="../post/read.php/<?=$_REQUEST['bbs']."/".$tmp?>/l50">#<?=$_REQUEST['bbs'].$tmp?></a> </td>
+<td> <a class="item" href="../post/read.php/<?php echo "${bbs}/${tmp}"?>/l50">#<?php echo "${bbs}${tmp}"; ?></a> </td>
 <td><?=$SUBJECT[$tmp]?></td>
 <td><input type="text" size="10" name="name_774" value="<?=$threadconf[$tmp][1]?>"></td>
 <td><input type="text" size="10" name="force_774" value="<?=$threadconf[$tmp][2]?>"></td>
@@ -127,7 +146,7 @@ for ($i = $st; $i < $st+$thread; $i++) {
 <td><input type="checkbox" name="zerothello"<?php if ($threadconf[$tmp][8]) echo " checked"; ?> value="1"></td>
 <td><input type="checkbox" name="up"<?php if ($threadconf[$tmp][9]) echo " checked"; ?> value="1"></td>
 <td>
- <input type="hidden" name="bbs" value="<?=$_REQUEST['bbs']?>">
+ <input type="hidden" name="bbs" value="<?php echo $bbs; ?>">
  <input type="hidden" name="key" value="<?=$tmp?>">
  <input type="hidden" name="mode" value="set">
  <input type="submit" value="設定変更">
@@ -139,7 +158,7 @@ for ($i = $st; $i < $st+$thread; $i++) {
 echo "</table>\n";
 for ($i = 1; $i <= $total_page; $i++) {
 	if ($i == $_GET['page']) echo " $i \n";
-	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;page=$i\">$i</a> \n";
+	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=${bbs}&amp;page=$i\">$i</a> \n";
 }
 echo "</body></html>";
 exit;

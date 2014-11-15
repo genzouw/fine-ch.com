@@ -20,7 +20,7 @@ else disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消�
 #　ファイル操作（サブジェクトファイル読み込み）
 #==================================================
 #サブジェクトファイルを読み込む
-$subfile = "../$_REQUEST[bbs]/subject.txt";
+$subfile = "../dat/subject.txt";
 #サブジェクトファイルを読み込む
 $SUBJECTLIST = @file($subfile);
 #サブジェクト内容をハッシュに格納
@@ -124,8 +124,8 @@ if (isset($_POST['mode']) and $_POST['mode'] == "del") {
 		#0thello ファイル削除
 		@unlink("../$_POST[bbs]/0thello/$_POST[key].dat");
 		#threadconf ログ削除
-		$threadconf = file("../$_POST[bbs]/threadconf.cgi");
-		$fp = fopen("../$_POST[bbs]/threadconf.cgi", "w");
+		$threadconf = file("../${bbs}/cgi/threadconf.cgi");
+		$fp = fopen("../${bbs}/cgi/threadconf.cgi", "w");
 		foreach($threadconf as $key=>$val) {
 			if (!strstr($val, $_POST['key'])) fwrite($fp, $val);
 		}
@@ -241,11 +241,11 @@ EOF;
 		fclose($fp);
 		#0thello ファイル削除
 		@unlink("../$_POST[bbs]/0thello/$_POST[key].dat");
-		$threadconf = file("../$_POST[bbs]/threadconf.cgi");
+		$threadconf = file("../${bbs}/cgi/threadconf.cgi");
 		foreach($threadconf as $key=>$val) {
 			if (strstr($val, $_POST['key'])) unset($threadconf[$key]);
 		}
-		$fp = fopen("../$_POST[bbs]/threadconf.cgi", "w");
+		$fp = fopen("../${bbs}/cgi/threadconf.cgi", "w");
 		fwrite($fp, implode("\n", $threadconf));
 		fclose($fp);
 		$comment = '<font color="red">スレッドを移動しました。メニューの<b>index.htmlを作り直す</b>をクリックしてください。</font><br>';

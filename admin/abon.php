@@ -23,7 +23,7 @@ if (is_file($set_pass)) {
 else disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！");
 require("../$_REQUEST[bbs]/config.php");
 if (!empty($_POST['key'])) {
-	$fp  = fopen("../$_POST[bbs]/threadconf.cgi", "r");
+	$fp  = fopen("../${bbs}/cgi/threadconf.cgi", "r");
 	while ($vip = fgetcsv($fp, 1024)) {
 		if ($vip[0] == $_POST['key']) break;
 		else $vip[0] = 0;
@@ -35,7 +35,7 @@ if (!empty($_POST['key'])) {
 #==================================================
 #サブジェクトファイル更新
 #サブジェクトファイルを読み込む
-$subfile = "../$_REQUEST[bbs]/subject.txt";
+$subfile = "../dat/subject.txt";
 $SUBJECTLIST = @file($subfile);
 #サブジェクト内容をハッシュに格納
 $PAGEFILE = array();
@@ -99,7 +99,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "res_del" and isset($_POST['del'
 	require '../post/make_work.php';
 	$sub_txt = MakeWorkFile($_POST['bbs'], $_POST['key']);
 	if (!$_POST['mes']) {
-		$fp = fopen("../$_POST[bbs]/subject.txt", "w");
+		$fp = fopen("../dat/subject.txt", "w");
 		foreach ($PAGEFILE as $line) {
 			if ($line == $_POST['key']) {
 				$SUBJECT[$line] = $sub_txt;
