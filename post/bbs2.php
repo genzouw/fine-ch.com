@@ -53,7 +53,11 @@ if ($_POST['subject']) {
 	fclose($fp);
 }
 
-$fp  = fopen("../${bbs}/cgi/threadconf.cgi", "r");
+$threadConfFile = "${localeDirPath}/cgi/threadconf.cgi"; 
+if (!file_exists($threadConfFile)) {
+    touch($threadConfFile);
+}
+$fp  = fopen($threadConfFile, "r");
 while ($vip = fgetcsv($fp, 1024)) {
 	if ($vip[0] == $_POST['key']) break;
 	else $vip[0] = 0;
