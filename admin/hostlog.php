@@ -20,7 +20,7 @@ else disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消�
 #==================================================
 #　ファイル操作（ホストファイル名読み込み）
 #==================================================
-$log_file = "../$_GET[bbs]/hostlog.cgi";
+$log_file = "../cgi/hostlog.cgi";
 if (!is_file($log_file)) disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：$log_file がありません");
 if (!is_writable($log_file)) disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：$log_file に書き込み属性がありません");
 $host_log = file($log_file);

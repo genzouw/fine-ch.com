@@ -6,7 +6,8 @@ $comment = '';
 #　初期情報の取得（設定ファイル）
 #====================================================
 #設定ファイルを読む
-$set_pass = "../$_REQUEST[bbs]/SETTING.TXT";
+$bbs = $_REQUEST['bbs'];
+$set_pass = "../${bbs}/SETTING.TXT";
 if (is_file($set_pass)) {
 	$set_str = file ($set_pass);
 	foreach ($set_str as $tmp){
@@ -43,7 +44,7 @@ if ($SUBJECTLIST) {
 #　スレッド削除
 #==================================================
 if (isset($_POST['mode']) and $_POST['mode'] == "del") {
-	if (!is_file("../$_POST[bbs]/dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
+	if (!is_file("../dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
 	if (!isset($_POST['chk']) or $_POST['chk'] != "ok") {
 		preg_match("/(.*)(\(\d+\))$/", $SUBJECT[$_POST['key']], $match);
 		?>
@@ -77,7 +78,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "del") {
 		exit;
 	}
 	else {
-		$delfile = "../$_POST[bbs]/dat/$_POST[key].dat";
+		$delfile = "../dat/$_POST[key].dat";
 		@chmod($delfile, 0644);
 		unlink($delfile);
 		@unlink("../$_POST[bbs]/html/$_POST[key].html");
@@ -89,7 +90,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "del") {
 				$tmp = rtrim($tmp);
 				list($file, $value) = explode("<>", $tmp);
 				if ("$_POST[key].dat" != $file) $new .= $tmp."\n";
-				$filename = "../$_POST[bbs]/dat/$file";
+				$filename = "../dat/$file";
 				if (is_file($filename)) {
 					#datが存在する場合のみ最後に追加
 					if (preg_match("/(\d+)\.dat$/", $file, $match)) {
@@ -102,21 +103,21 @@ if (isset($_POST['mode']) and $_POST['mode'] == "del") {
 		$fp = fopen($subfile, "w");
 		fputs($fp, $new);
 		fclose($fp);
-		$dir = opendir("../$_POST[bbs]/img");
+		$dir = opendir("../img");
 		while (false !== ($file = readdir($dir))) {
 			if ($file != "." and $file != "..") {
 				// 拡張子が固定でないのでキーで選択
 				if (strstr($file, $_POST['key'])) {
-					unlink ("../$_POST[bbs]/img/$file");
+					unlink ("../img/$file");
 				}
 			}
 		}
 		closedir($dir);
-		$dir = opendir("../$_POST[bbs]/img2");
+		$dir = opendir("../img2");
 		while (false !== ($file = readdir($dir))) {
 			if ($file != "." and $file != "..") {
 				if (strstr($file, $_POST['key'])) {
-					unlink ("../$_POST[bbs]/img2/$file");
+					unlink ("../img2/$file");
 				}
 			}
 		}
@@ -137,7 +138,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "del") {
 #　スレッド移動
 #==================================================
 if (isset($_POST['mode']) and $_POST['mode'] == "mov") {
-	if (!is_file("../$_POST[bbs]/dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
+	if (!is_file("../dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
 	if (!isset($_POST['chk']) or $_POST['chk'] != "html") {
 		preg_match("/(.*)(\(\d+\))$/", $SUBJECT[$_POST['key']], $match);
 		?>
@@ -174,7 +175,7 @@ if (isset($_POST['mode']) and $_POST['mode'] == "mov") {
 	#=========================
 	}
 	else {
-		$log = file("../$_POST[bbs]/dat/$_POST[key].dat");
+		$log = file("../dat/$_POST[key].dat");
 		list(,,,,$subject) = explode("<>", $log[0]);
 		$html = <<<EOF
 <html>
@@ -186,7 +187,7 @@ img {border:0;}
 --></style>
 </head>
 <body text="$SETTING[BBS_TEXT_COLOR]" bgcolor="$SETTING[BBS_THREAD_COLOR]" link="$SETTING[BBS_LINK_COLOR]" alink="$SETTING[BBS_ALINK_COLOR]" vlink="$SETTING[BBS_VLINK_COLOR]">
-<a href="/<?php echo $_POST['bbs']; ?>/index.html">■掲示板に戻る■</a>
+<a href="/<?php echo $_POST[bbs]; ?>/index.html">■掲示板に戻る■</a>
 <dl>
 <font size=+1 color="$SETTING[BBS_SUBJECT_COLOR]">$subject</font></b>
 EOF;
@@ -211,8 +212,8 @@ EOF;
 		}
 		fputs($fp, "</dl>\n<p>\n<hr>\n</body>\n</html>");
 		fclose($fp);
-		@chmod("../$_POST[bbs]/dat/$_POST[key].dat", 0644);
-		unlink("../$_POST[bbs]/dat/$_POST[key].dat");
+		@chmod("../dat/$_POST[key].dat", 0644);
+		unlink("../dat/$_POST[key].dat");
 		@unlink("../$_POST[bbs]/html/$_POST[key].html");
 		$fp = fopen("../$_POST[bbs]/kako/kako.txt", "a");
 		fputs($fp, "$_POST[key] ※ <a href=\"$_POST[key].html\">".$SUBJECT[$_POST['key']]."</a><br>\n");
@@ -225,7 +226,7 @@ EOF;
 				$tmp = rtrim($tmp);
 				list($file, $value) = explode("<>", $tmp);
 				if ("$_POST[key].dat" != $file) $new .= $tmp."\n";
-				$filename = "../$_POST[bbs]/dat/$file";
+				$filename = "../dat/$file";
 				if (is_file($filename)) {
 					#datが存在する場合のみ最後に追加
 					if (preg_match("/(\d+)\.dat$/", $file, $match)) {
@@ -277,7 +278,7 @@ $total = count($PAGEFILE) + $thread - 1;
 $total_page = (int)($total/$thread);
 for ($i = 1; $i <= $total_page; $i++) {
 	if ($i == $_GET['page']) echo " $i \n";
-	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;page=$i\">$i</a> \n";
+	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=${bbs}&amp;page=$i\">$i</a> \n";
 }
 ?>
 <table border="1" cellspacing="0" cellpadding="2">
@@ -309,7 +310,7 @@ for ($i = $st; $i < $st+$thread; $i++) {
 echo "</table>\n";
 for ($i = 1; $i <= $total_page; $i++) {
 	if ($i == $_GET['page']) echo " $i \n";
-	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;page=$i\">$i</a> \n";
+	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=${bbs}&amp;page=$i\">$i</a> \n";
 }
 echo "</body></html>";
 exit;

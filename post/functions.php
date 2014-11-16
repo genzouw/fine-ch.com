@@ -1,4 +1,27 @@
 <?php
+function loadSubjectFile( $datPath, $subjectFile, &$subjects ) {
+    $threadInfos = array();
+    # サブジェクトファイルを読み込む
+    # スレッドキー.dat<>タイトル (レスの数)\n
+    # $threadInfos = array('スレッドキー.dat',・・・)
+    # $SUBJECT = array('スレッドキー.dat'=>'タイトル (レスの数)',・・・)
+    $subr = @file($subjectFile);
+    if ($subr) {
+        foreach ($subr as $tmp){
+            $tmp = rtrim($tmp);
+            list($file, $value) = explode("<>", $tmp);
+            if (!$file) break;
+            $filename = $datPath . $file;
+            array_push($threadInfos,$file);
+            // if ($subjects) {
+                $subjects[$file] = $value;
+            // }
+        }
+    }
+
+    return $threadInfos;
+}
+
 /**
  * 過去ログメニューをかーくー
  */
@@ -154,7 +177,7 @@ function createHtmlIndexForSp($spIndexFile, $subjectFilePath, $setting, $locale,
 {
     $fp = fopen ($spIndexFile, "w");
 
-    $localeTemplateDir = "../{$setting['BBS_TEMPLATE_DIR']}/${locale}";
+    $localeTemplateDir = "../template/${locale}";
 
     list($header, $footer) = explode('<CUT>', implode('', file("${localeTemplateDir}/m/index.txt")));
 

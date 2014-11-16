@@ -27,7 +27,7 @@ define('THREAD_BYTES', $_POST[THREAD_BYTES]);
 # ファイルアップ許可
 define('UPLOAD', $_POST[UPLOAD]);
 # GDバージョン
-define('GD_VERSION', $_POST[GD_VERSION]);
+// define('GD_VERSION', $_POST[GD_VERSION]);
 # アップロード上限（バイト）
 define('MAX_BYTES', $_POST[MAX_BYTES]);
 # サムネイル画像の幅

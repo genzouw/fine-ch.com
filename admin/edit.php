@@ -4,11 +4,13 @@ require("passcheck.php");
 #　テキスト編集
 #=====================================
 if (!is_dir("../$_REQUEST[bbs]")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
+
+$bbs = $_REQUEST['bbs'];
 #====================================================
 #　初期情報の取得（設定ファイル）
 #====================================================
 #設定ファイルを読む
-$set_pass = "../$_REQUEST[bbs]/SETTING.TXT";
+$set_pass = "../${bbs}/SETTING.TXT";
 if (is_file($set_pass)) {
 	$set_str = file($set_pass);
 	foreach ($set_str as $tmp){
@@ -19,7 +21,7 @@ if (is_file($set_pass)) {
 }
 else disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！");
 # index.txtの読み込み
-list($header,) = explode('<CUT>', implode('', file("../post/index.txt")));
+list($header,) = explode('<CUT>', implode('', file("../template/${bbs}/index.txt")));
 $header = str_replace("<BBS_TITLE>", $SETTING['BBS_TITLE'], $header);
 $header = str_replace("<BBS_TEXT_COLOR>", $SETTING['BBS_TEXT_COLOR'], $header);
 $header = str_replace("<BBS_MENU_COLOR>", $SETTING['BBS_MENU_COLOR'], $header);
@@ -30,16 +32,16 @@ $header = str_replace("<BBS_BG_COLOR>", $SETTING['BBS_BG_COLOR'], $header);
 $header = str_replace("<BBS_BG_PICTURE>", $SETTING['BBS_BG_PICTURE'], $header);
 $header = str_replace("<BBS_TITLE_NAME>", '<h1 class="title">'.$SETTING['BBS_TITLE'].'</h1>
 <h3>テキスト編集</h3>', $header);
-$headad = implode('', file("../post/headad.txt"));
+$headad = implode('', file("../template/${bbs}/headad.txt"));
 if (isset($_REQUEST['mode']) and $_REQUEST['mode'] == 'view') {
-	$head = implode('', file("../$_REQUEST[bbs]/head.txt"));
+	$head = implode('', file("../template/${bbs}/head.txt"));
 	$header = str_replace("<GUIDE>", $head, $header);
-	$option = implode('', file("../post/option.txt"));
+	$option = implode('', file("../template/${bbs}/option.txt"));
 	$header = str_replace("<OPTION>", $option, $header);
-	$putad = implode('', file("../post/putad.txt"));
+	$putad = implode('', file("../template/${bbs}/putad.txt"));
 	$header = str_replace("<PUTAD>", $putad, $header);
 	echo $header;
-	$headad = implode('', file("../post/headad.txt"));
+	$headad = implode('', file("../template/${bbs}/headad.txt"));
 	if ($headad) {
 		echo '<table border="1" cellspacing="7" cellpadding="3" width="95%" bgcolor="'.$SETTING['BBS_MENU_COLOR']."\" align=\"center\">\n <tr>\n  <td>\n";
 		echo $headad;
@@ -49,8 +51,8 @@ if (isset($_REQUEST['mode']) and $_REQUEST['mode'] == 'view') {
 }
 if (isset($_REQUEST['file'])) {
 	if ($_REQUEST['file'] == 'option' or $_REQUEST['file'] == 'putad' or $_REQUEST['file'] == 'headad')
-			$file_name = "../post/$_REQUEST[file].txt";
-	elseif ($_REQUEST['file'] == 'head') $file_name = "../$_REQUEST[bbs]/head.txt";
+			$file_name = "../template/${bbs}/$_REQUEST[file].txt";
+	elseif ($_REQUEST['file'] == 'head') $file_name = "../template/${bbs}/head.txt";
 	else disperror("ＥＲＲＯＲ！", "ファイル名が不正です。");
 	if (!is_file($file_name)) disperror("ＥＲＲＯＲ！", "ファイル（".$file_name."）がありません。ファイルをアップロードしてください。");
 	if (!is_writable($file_name)) disperror("ＥＲＲＯＲ！", "ファイル（".$file_name."）に書き込み属性がありません。パーミッションを606か666にしてください。");

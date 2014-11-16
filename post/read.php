@@ -118,7 +118,7 @@ function g(key,tmp1,tmp2,xx1,xx2,xx3,len){
 <style type=text/css><!-- img {border:0;} --></style>
 </head>
 <body bgcolor="<?=$SETTING['BBS_BG_COLOR']?>" text="<?=$SETTING['BBS_TEXT_COLOR']?>" link="<?=$SETTING['BBS_LINK_COLOR']?>" alink="<?=$SETTING['BBS_ALINK_COLOR']?>" vlink="<?=$SETTING['BBS_VLINK_COLOR']?>">
-<?php readfile("../{$SETTING['BBS_TEMPLATE_DIR']}/${bbs}/headad.txt"); ?>
+<?php readfile("../template/${bbs}/headad.txt"); ?>
 <a href="../<?php echo $urlDirs; ?>/index.html">■掲示板に戻る■</a>
 <?php
 if(!JIKAN_KISEI or ($JIKAN > JIKAN_END and $JIKAN < JIKAN_START)) {
@@ -275,7 +275,7 @@ function DispError($topic) {
     echo "--></style>";
     echo "</head>";
     echo "<body text='#000000' bgcolor='#efefef'>";
-    echo readfile(($requestUriIsSp ? '../' : '') . "../{$SETTING['BBS_TEMPLATE_DIR']}/${bbs}/headad.txt");
+    echo readfile(($requestUriIsSp ? '../' : '') . "../template/${bbs}/headad.txt");
     echo "<b><font size='+1' color='#ff0000'>$topic</font></b><br>";
     echo "<dl>";
     echo "<dt>1 名前：<font color='green'><b>".VERSION."</b></font>投稿日：2001/04/12(木) 15:11";

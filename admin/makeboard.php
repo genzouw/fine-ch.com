@@ -1,5 +1,9 @@
 <?php
 require 'passcheck.php';
+
+$PATH		= "../".$_GET['bbs']."/";
+require __DIR__ . '/../post/functions.php';
+
 #====================================================
 #　各種ＰＡＴＨ生成
 #====================================================
@@ -11,6 +15,7 @@ $TEMPPATH = $PATH . "html/";
 $INDEXFILE = $PATH . "index.html";
 $SUBFILE = $PATH . "subback.html";
 $IMODEFILE = $PATH."m/index.html";
+$subjectfile = "../dat/subject.txt";
 if ($_GET['bbs']) require $PATH.'config.php';
 #====================================================
 #　掲示板新規作成
@@ -63,26 +68,25 @@ elseif ($_GET['mode'] == 'remake') {
 	if (!is_dir($PATH)) disperror("ＥＲＲＯＲ！","そんな板ないです！");
 	if (isset($_GET['check']) and $_GET['check'] == 'check') {
 		# サブジェクトファイルを読み込む
-		$PAGEFILE = array();
-		$subjectfile = $PATH."subject.txt";
-		$subr = @file($subjectfile);
-		$subbak = '';
-		if ($subr) {
-			foreach($subr as $tmp){
-				$tmp = chop($tmp);
-				list ($file, $value) = explode("<>", $tmp);
-				if (!$file) break;
-				$filename = "$DATPATH/$file";
-				if (is_file($filename)){ # datが存在する場合順番に追加
-					array_push($PAGEFILE,$file);
-					$subbak .= $tmp."\n";
-					$SUBJECT[$file] = $value;
-				}
-			}
-			$fp = fopen($PATH."subject.txt", "w");
-			fputs($fp, $subbak);
-			fclose($fp);
-		}
+		// $PAGEFILE = array();
+		// $subr = @file($subjectfile);
+		// $subbak = '';
+		// if ($subr) {
+			// foreach($subr as $tmp){
+				// $tmp = chop($tmp);
+				// list ($file, $value) = explode("<>", $tmp);
+				// if (!$file) break;
+				// $filename = "$DATPATH/$file";
+				// if (is_file($filename)){ # datが存在する場合順番に追加
+					// array_push($PAGEFILE,$file);
+					// $subbak .= $tmp."\n";
+					// $SUBJECT[$file] = $value;
+				// }
+			// }
+			// $fp = fopen($PATH."subject.txt", "w");
+			// fputs($fp, $subbak);
+			// fclose($fp);
+		// }
 		$NOWTIME = time();
 		if (GD_VERSION) {
 			$enctype = 'multipart/form-data';

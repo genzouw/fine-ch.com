@@ -12,6 +12,7 @@ $PATH		= "../".$_POST['bbs']."/";
 $INDEXFILE	= $PATH."index.html";
 
 require $PATH.'config.php';
+require __DIR__ . '/functions.php';
 
 loadSetting( $_POST['bbs'] );
 
@@ -344,32 +345,20 @@ $outdat = "$_POST[FROM]<>$_POST[mail]<>$DATE_ID <> $_POST[MESSAGE] <>$_POST[subj
 # $outdatの追加とhtmlファイルの作成（戻り値は"サブジェクト名 (レスの総数)"）
 require 'make_work.php';
 
-$bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
+$bbsLocales = array(
+    'jp', 'en', 'vn',
+);
 $subtt = MakeWorkFile($bbsLocales, $_POST['key'], $outdat);
 
 #====================================================
 #　ファイル操作（subject.txt）
 #====================================================
-$keyfile = $_POST['key'].".dat";
-$threadInfos = array();
-# サブジェクトファイルを読み込む
-# スレッドキー.dat<>タイトル (レスの数)\n
-# $threadInfos = array('スレッドキー.dat',・・・)
-# $SUBJECT = array('スレッドキー.dat'=>'タイトル (レスの数)',・・・)
-$subr = @file($subjectfile);
-if ($subr) {
-	foreach ($subr as $tmp){
-		$tmp = rtrim($tmp);
-		list($file, $value) = explode("<>", $tmp);
-		if (!$file) break;
-		$filename = $DATPATH . $file;
-		array_push($threadInfos,$file);
-		$SUBJECT[$file] = $value;
-	}
-}
+$SUBJECT = array();
+$threadInfos = loadSubjectFile($DATPATH, $subjectfile, $SUBJECT);
 # サブジェクト数を取得
 $FILENUM = count($threadInfos);
 # 新規スレッドの場合は1個追加
+$keyfile = $_POST['key'].".dat";
 if ($_POST['subject']) $FILENUM++;
 # ログを定数に揃える
 for ($start = KEEPLOGCOUNT; $start < $FILENUM; $start++) {
@@ -424,7 +413,7 @@ else {
 		if ($tmp != $keyfile) {
 			$temp[$i] = $tmp;
 			$i++;
-			fputs($fp, "$tmp<>$SUBJECT[$tmp]\n");
+			fputs($fp, "$tmp<>".$SUBJECT[$tmp]."\n");
 		}
 	}
 	$threadInfos = $temp;

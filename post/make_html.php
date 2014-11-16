@@ -1,10 +1,16 @@
 <?php
 define('VERSION', '2005/04/23');
 
-require __DIR__ . '/functions.php';
+// require __DIR__ . '/functions.php';
 
 // メイン処理
-$bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
+$SUBJECT = array();
+$threadInfos = loadSubjectFile('../dat', $subjectfile, $SUBJECT);
+
+// $bbsLocales = explode(',', $SETTING['BBS_LOCALES']);
+$bbsLocales = array(
+    'jp', 'en', 'vn',
+);
 foreach ($bbsLocales as $locale) {
     $localeDirPath = "../${locale}";
     if (!is_dir($localeDirPath)) {
@@ -20,11 +26,11 @@ foreach ($bbsLocales as $locale) {
     createHtmlKakoLog($subbackFile, $threadInfos, $SUBJECT, $locale);
 
     $htmlFilePath = "${localeDirPath}/index.html";
-    $localeTemplateDir = "../{$SETTING['BBS_TEMPLATE_DIR']}/${locale}";
+    $localeTemplateDir = "../template/${locale}";
     createHtmlIndex($htmlFilePath, $localeTemplateDir, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $NOWTIME, $bbs_title);
 
     $spHtmlFilePath = "${spLocaleDirPath}/index.html";
-    $spLocaleTemplateDir = "../{$SETTING['BBS_TEMPLATE_DIR']}/${locale}/m";
+    $spLocaleTemplateDir = "../template/${locale}/m";
     createHtmlIndex($spHtmlFilePath, $spLocaleTemplateDir, $threadInfos, $SUBJECT, $SETTING, $locale, $localeDirPath, $NOWTIME, $bbs_title, true);
     // createHtmlIndexForSp($spIndexFile, $subjectfile, $SETTING, $locale);
 }

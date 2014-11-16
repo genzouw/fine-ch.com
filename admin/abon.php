@@ -6,12 +6,14 @@ $thread = 50;
 $res = 30;
 $comment = '';
 $stopper_array = array('(‾ー‾)ﾆﾔﾘｯ','(｀･ω･´) ｼｬｷｰﾝ','（´・ω・｀）ﾓｷｭ');
-if (!is_dir("../$_REQUEST[bbs]")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
+$bbs = $_REQUEST['bbs'];
+echo '<pre>'; var_dump($bbs); echo '</pre>';
+if (!is_dir("../$bbs")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
 #====================================================
 #　初期情報の取得（設定ファイル）
 #====================================================
 #設定ファイルを読む
-$set_pass = "../$_REQUEST[bbs]/SETTING.TXT";
+$set_pass = "../$bbs/SETTING.TXT";
 if (is_file($set_pass)) {
 	$set_str = file($set_pass);
 	foreach ($set_str as $tmp){
@@ -21,7 +23,7 @@ if (is_file($set_pass)) {
 	}
 }
 else disperror("ＥＲＲＯＲ！","ＥＲＲＯＲ：ユーザー設定が消失しています！");
-require("../$_REQUEST[bbs]/config.php");
+require("../$bbs/config.php");
 if (!empty($_POST['key'])) {
 	$fp  = fopen("../${bbs}/cgi/threadconf.cgi", "r");
 	while ($vip = fgetcsv($fp, 1024)) {
@@ -54,8 +56,8 @@ foreach($SUBJECTLIST as $tmp){
 #　レスあぼーん
 #==================================================
 if (isset($_POST['mode']) and $_POST['mode'] == "res_del" and isset($_POST['del'])) {
-	if (!is_file("../$_POST[bbs]/dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
-	$datafile = "../$_POST[bbs]/dat/$_POST[key].dat";
+	if (!is_file("../dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
+	$datafile = "../dat/$_POST[key].dat";
 	if (!is_writable($datafile)) disperror("ＥＲＲＯＲ！", "このスレッドには書き込めません！");
 	$temp = file($datafile);
 	$num = count($temp);
@@ -74,17 +76,17 @@ if (isset($_POST['mode']) and $_POST['mode'] == "res_del" and isset($_POST['del'
 		if (!$_POST['mes']) $line = '';
 		else $line = "$_POST[mes]<>$_POST[mes]<>$_POST[mes]<>$_POST[mes]<>$_POST[mes]\n";
 		$temp[$del] = $line;
-		if (is_file("../$_POST[bbs]/img/$_POST[key]$imgnum.jpg")) {
-			unlink("../$_POST[bbs]/img/$_POST[key]$imgnum.jpg");
-			@unlink("../$_POST[bbs]/img2/$_POST[key]$imgnum.jpg");
+		if (is_file("../img/$_POST[key]$imgnum.jpg")) {
+			unlink("../img/$_POST[key]$imgnum.jpg");
+			@unlink("../img2/$_POST[key]$imgnum.jpg");
 		}
-		elseif (is_file("../$_POST[bbs]/img/$_POST[key]$imgnum.gif")) {
-			unlink("../$_POST[bbs]/img/$_POST[key]$imgnum.gif");
-			@unlink("../$_POST[bbs]/img2/$_POST[key]$imgnum.jpg");
+		elseif (is_file("../img/$_POST[key]$imgnum.gif")) {
+			unlink("../img/$_POST[key]$imgnum.gif");
+			@unlink("../img2/$_POST[key]$imgnum.jpg");
 		}
-		elseif (is_file("../$_POST[bbs]/img/$_POST[key]$imgnum.png")) {
-			unlink("../$_POST[bbs]/img/$_POST[key]$imgnum.png");
-			@unlink("../$_POST[bbs]/img2/$_POST[key]$imgnum.jpg");
+		elseif (is_file("../img/$_POST[key]$imgnum.png")) {
+			unlink("../img/$_POST[key]$imgnum.png");
+			@unlink("../img2/$_POST[key]$imgnum.jpg");
 		}
 		if (!$_POST['mes']) {
 			foreach ($temp as $key=>$line) {
@@ -155,7 +157,7 @@ if(isset($_REQUEST['mode']) and ($_REQUEST['mode'] == "view" or $_REQUEST['mode'
 	echo "page：$_GET[page]<br>\n";
 	for ($i = 1; $i <= $total_page; $i++) {
 		if ($i == $_GET['page']) echo " $i \n";
-		else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;key=$_REQUEST[key]&amp;mode=view&amp;page=$i\">$i</a> \n";
+		else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$bbs&amp;key=$_REQUEST[key]&amp;mode=view&amp;page=$i\">$i</a> \n";
 	}
 	?>
 <table border="1" cellspacing="0" cellpadding="2">
@@ -180,7 +182,7 @@ if(isset($_REQUEST['mode']) and ($_REQUEST['mode'] == "view" or $_REQUEST['mode'
 	echo "</table></form>\n";
 	for ($i = 1; $i <= $total_page; $i++) {
 		if ($i == $_GET['page']) echo " $i \n";
-		else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;key=$_REQUEST[key]&amp;mode=view&amp;page=$i\">$i</a> \n";
+		else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$bbs&amp;key=$_REQUEST[key]&amp;mode=view&amp;page=$i\">$i</a> \n";
 	}
 	echo "</body></html>";
 	exit;
@@ -189,8 +191,8 @@ if(isset($_REQUEST['mode']) and ($_REQUEST['mode'] == "view" or $_REQUEST['mode'
 #　スレッドストッパー
 #==================================================
 elseif (isset($_POST['mode']) and $_POST['mode'] == "stop") {
-	if (!is_file("../$_POST[bbs]/dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
-	$dattemp = "../$_POST[bbs]/dat/$_POST[key].dat";
+	if (!is_file("../dat/$_POST[key].dat")) disperror("ＥＲＲＯＲ！", "そんな板orスレッドないです。");
+	$dattemp = "../dat/$_POST[key].dat";
 	$workfile = "../$_POST[bbs]/html/$_POST[key].html";
 	if (!is_writable($dattemp)) disperror("ＥＲＲＯＲ！", "すでに書きこみ出来ません。");
 	else {
@@ -230,7 +232,7 @@ page：<?=$_GET['page']?><br>
 <?php
 for ($i = 1; $i <= $total_page; $i++) {
 	if ($i == $_GET['page']) echo " $i \n";
-	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;page=$i\">$i</a> \n";
+	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$bbs&amp;page=$i\">$i</a> \n";
 }
 ?>
 <table border="1" cellspacing="0" cellpadding="2">
@@ -271,7 +273,7 @@ else echo "<s>ストップ</s>";
 echo "</table>\n";
 for ($i = 1; $i <= $total_page; $i++) {
 	if ($i == $_GET['page']) echo " $i \n";
-	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$_REQUEST[bbs]&amp;page=$i\">$i</a> \n";
+	else echo " <a class=\"item\" href=\"$_SERVER[PHP_SELF]?bbs=$bbs&amp;page=$i\">$i</a> \n";
 }
 echo "</body></html>";
 exit;

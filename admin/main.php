@@ -5,21 +5,12 @@ require("passcheck.php");
 <head>
 <title>トップページ</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="main.css" type="text/css">
+<link rel="stylesheet" href="./main.css" type="text/css">
 </head>
 <body>
 <h3>トップ</h3>
 この画面です。<br>
 <br>
-<?php/*
-if (!ini_get("safe_mode")) {
-	?>
-<h3>掲示板作成</h3>
-新しく掲示板を自動設置します。PHPの設定でSafe modeがOnの場合は使用できません。<br>
-<br>
-<?php
-}*/
-?>
 <h3>キャップ管理</h3>
 ここでパスワードと名前を登録すると、メール欄に”#パスワード”と入力することで★マークをつけることが出来ます。<br>
 <br>

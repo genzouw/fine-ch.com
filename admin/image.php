@@ -21,7 +21,7 @@ require "../$_GET[bbs]/config.php";
 #==================================================
 #　ファイル操作（画像ファイル名読み込み）
 #==================================================
-$img_dir = "../$_GET[bbs]/img";
+$img_dir = "../img";
 if ($dir = opendir($img_dir)) {
 	while (($file = readdir($dir)) !== false) {
 		if ($file != '.' and $file != '..') $img_list[] = $file;
@@ -37,15 +37,15 @@ if(isset($_GET['mode']) and $_GET['mode'] == "img_del") {
 	if (isset($_GET['del']) and $_GET['del']) {
 		foreach ($_GET['del'] as $del){
 			$file_name = $img_list[$del];
-			unlink("../$_GET[bbs]/img/$file_name");
+			unlink("../img/$file_name");
 			$base = preg_replace("/\D/", '', $file_name);
-			if (is_file ("../$_GET[bbs]/img2/$base.jpg")) {
-				unlink("../$_GET[bbs]/img2/$base.jpg");
+			if (is_file ("../img2/$base.jpg")) {
+				unlink("../img2/$base.jpg");
 			}
 		}
 	}
 	$img_list = array();
-	$img_dir = "../$_GET[bbs]/img";
+	$img_dir = "../img";
 	if ($dir = opendir($img_dir)) {
 		while (($file = readdir($dir)) !== false) {
 			if($file != '.' and $file != '..') {
@@ -94,12 +94,12 @@ for ($i = 1; $i <= $total_page; $i++) {
 for ($i = $st; $i < $st + $inum; $i++) {
 	if (!isset($img_list[$i])) break;
 	$base = preg_replace("/\D/", '', $img_list[$i]);
-	if (is_file("../$_GET[bbs]/img2/$base.jpg")) {
-		$src = "../$_GET[bbs]/img2/$base.jpg";
+	if (is_file("../img2/$base.jpg")) {
+		$src = "../img2/$base.jpg";
 		list(,,,$size) = getimagesize($src);
 	}
 	else {
-		$src = "../$_GET[bbs]/img/$img_list[$i]";
+		$src = "../img/$img_list[$i]";
 		list($width, $height) = getimagesize($src);
 		if ($width > MAX_W or $height > MAX_H) {
 			$W2 = MAX_W / $width;
@@ -110,7 +110,7 @@ for ($i = $st; $i < $st + $inum; $i++) {
 		}
 		$size = 'width="'.$width.'" height="'.$height.'"';
 	}
-	echo '<tr><td><input type="checkbox" name="del[]" value="'.$i++.'"></td><td align="center">'.$i--."</td><td><a class=\"item\" href=\"../$_GET[bbs]/img/$img_list[$i]\">$img_list[$i]</a></td><td><img src=\"$src\" $size></td></tr>\n";
+	echo '<tr><td><input type="checkbox" name="del[]" value="'.$i++.'"></td><td align="center">'.$i--."</td><td><a class=\"item\" href=\"../img/$img_list[$i]\">$img_list[$i]</a></td><td><img src=\"$src\" $size></td></tr>\n";
 }
 ?>
 </table>
