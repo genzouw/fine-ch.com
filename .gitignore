@@ -13,3 +13,6 @@ jp/html/*
 jp/m/*
 vn/html/*
 vn/m/*
+jp/cgi/*.cgi
+en/cgi/*.cgi
+vn/cgi/*.cgi

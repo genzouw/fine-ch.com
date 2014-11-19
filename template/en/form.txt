@@ -1,3 +1,4 @@
+<b style="color:red">formです</b>
  <form method="post" action="../post/bbs.php" enctype="<ENCTYPE>">
   <input type="hidden" name="bbs" value="<BBS>">
   <input type="hidden" name="key" value="<KEY>">

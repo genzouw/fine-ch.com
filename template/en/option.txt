@@ -1,2 +1,4 @@
+<b style="color:red">optionです</b>
 全板に共通のコメントを入れてください。<br>
 必要ないときは"option.txt"を空にしてください<br>
+xxxx

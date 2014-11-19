@@ -1,1 +1,2 @@
+<b style="color:red">headです</b>
 <p>"head.txt"に掲示板の規則等を書いてください。</p>
