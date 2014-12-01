@@ -1,1 +1,25 @@
-DirectoryIndex index.php
+<IFModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteCond %{HTTP:Accept-Language} ^vi
+    RewriteCond %{HTTP_USER_AGENT} (iPhone|Android.*Mobile|Windows.*Phone) [NC]
+    RewriteRule ^vn/(index.html)?$   /vn/m/index.html  [NC,R,L]
+
+    RewriteCond %{HTTP:Accept-Language} ^vi
+    RewriteRule ^$   /vn/index.html  [NC,R,L]
+
+    RewriteCond %{HTTP:Accept-Language} ^en
+    RewriteCond %{HTTP_USER_AGENT} (iPhone|Android.*Mobile|Windows.*Phone) [NC]
+    RewriteRule ^en/(index.html)?$   /en/m/index.html  [NC,R,L]
+
+    RewriteCond %{HTTP:Accept-Language} ^en
+    RewriteRule ^$   /en/index.html  [NC,R,L]
+
+    RewriteCond %{HTTP:Accept-Language} ^ja
+    RewriteCond %{HTTP_USER_AGENT} (iPhone|Android.*Mobile|Windows.*Phone) [NC]
+    RewriteRule ^jp/(index.html)?$   /jp/m/index.html  [NC,R,L]
+
+    RewriteCond %{HTTP:Accept-Language} ^ja
+    RewriteRule ^$   /jp/index.html  [NC,R,L]
+</IFModule>
