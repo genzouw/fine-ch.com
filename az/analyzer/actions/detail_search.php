@@ -24,7 +24,7 @@ class Detail_Search
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$path;
+		global $obj,$args,$path,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -309,7 +309,7 @@ class Detail_Search
 		echo $t1 . '<p id="content_date">' . "&lt; $y/$m$date_d &gt;" . '</p>' . "\n" . $t1;
 		
 		// DB名を定義
-		$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+        $t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 		
 		// DBに接続
 		$db->attach($t_db,'t');

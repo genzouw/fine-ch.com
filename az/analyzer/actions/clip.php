@@ -24,7 +24,7 @@ class Clip
 	{
 		
 		// グローバル変数を定義
-		global $args,$obj,$path,$conf;
+		global $args,$obj,$path,$conf,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -64,7 +64,7 @@ class Clip
 		$i_table = $prefix . '_i_' . $y . '_' . $m;
 		
 		// 月間DB名を定義
-		$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+		$t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 		
 		// DBが存在しない時は終了
 		if(!$db->exists($t_db)){return;}

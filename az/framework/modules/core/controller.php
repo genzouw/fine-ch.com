@@ -9,9 +9,11 @@ class Controller
 	
 	static function execute($base_dir,$work_dir)
 	{
-		
 		// グローバル変数を定義
-		global $obj,$args,$path,$conf;
+		global $obj,$args,$path,$conf,$userInfo,$group;
+
+        parse_str($_COOKIE['ls_login'], $userInfo);
+        $group = self::findGroup($userInfo['user'], $userInfo['group'], $work_dir);
 		
 		// 変数を初期化
 		$obj   = array();
@@ -191,9 +193,9 @@ class Controller
 			
 			// インスタンスを生成
 			$obj['db'] = new DB($data_dir);
-			
+
 			// DBに接続
-			$obj['db']->connect($fw['main_db']);
+			$obj['db']->connect("${group}_${fw['main_db']}");
 			
 		}
 		
@@ -226,5 +228,34 @@ class Controller
 		
 	}
 	
+    public static function findGroup($user,$group,$work_dir)
+    {
+        // iniファイル名を定義
+        $group_ini = $work_dir . '/configs/group.ini';
+
+        // iniファイルが存在しなければ認証しない
+        if (!file_exists($group_ini)) {return '';}
+
+        // user＆groupファイルをパース
+        $group_d = parse_ini_file($group_ini);
+
+        // ファイルデータを読み取る
+        foreach ($group_d as $key => $val) {
+
+            // ユーザー名とグループが一致した場合はtrueを返す
+            if ($user === md5($key)) {
+                $findGroup = array_pop(array_filter(explode(',', $val), function ($it) use ($group) {
+                    return $group == md5($it);
+                }));
+
+                return $findGroup;
+            }
+
+        }
+
+        return '';
+
+    }
+
 }
 

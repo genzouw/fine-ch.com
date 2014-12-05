@@ -24,7 +24,7 @@ class Pie_Chart
 	{
 		
 		// グローバル変数を定義
-		global $obj,$path,$args;
+		global $obj,$path,$args,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -67,7 +67,7 @@ class Pie_Chart
 		$i_table = $prefix . '_i_' . $y . '_' . $m;
 		
 		// DB名を定義
-		$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+		$t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 		
 		// DBが存在しない時は終了
 		if(!$db->exists($t_db)){return;}

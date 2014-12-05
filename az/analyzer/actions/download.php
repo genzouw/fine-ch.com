@@ -40,7 +40,7 @@ class Download
 		{
 			
 			// DB名を取得
-			$t = $prefix . '_' . $h[1] . '.db';
+			$t = "${group}_${prefix}" . '_' . $h[1] . '.db';
 			
 			// DBが存在しない時は終了
 			if(!$db->exists($t)){return;}

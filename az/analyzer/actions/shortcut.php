@@ -24,7 +24,7 @@ class Shortcut
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$path,$conf;
+		global $obj,$args,$path,$conf,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -80,7 +80,7 @@ class Shortcut
 		{
 			
 			// DB名を定義
-			$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+            $t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 			
 			// DBが存在する時
 			if($db->exists($t_db))

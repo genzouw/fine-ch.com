@@ -24,7 +24,7 @@ class Param
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$path,$conf;
+		global $obj,$args,$path,$conf,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -87,10 +87,10 @@ class Param
 		$li_table = $prefix . '_i_' . $ly . '_' . $lm;
 		
 		// DB名を定義
-		$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+		$t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 		
 		// DB名を定義
-		$l_db = $prefix . '_' . $ly . '_' . $lm . '.db';
+		$l_db = "${group}_${prefix}" . '_' . $ly . '_' . $lm . '.db';
 		
 		// DBが存在しない時は終了
 		if(!$db->exists($t_db)){return;}

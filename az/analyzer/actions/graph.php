@@ -24,8 +24,8 @@ class Graph
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$conf,$path;
-		
+		global $obj,$args,$conf,$path,$userInfo,$group;
+
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
 		$date = $obj['date'];
@@ -85,7 +85,7 @@ class Graph
 		////////////////////////////////////////////////////////////
 		
 		// DB名を定義
-		$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+		$t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 		
 		// 月別の時
 		if($graph === 'monthly'){list($w,$u,$p,$length,$left) = self::$graph($db,$y);}
@@ -366,7 +366,7 @@ class Graph
 	{
 		
 		// グローバル変数を定義
-		global $path;
+		global $path,$group;
 		
 		// 変数を初期化
 		$w = '';
@@ -388,7 +388,7 @@ class Graph
 			if($i < 10){$i = '0' . $i;}
 			
 			// DB名を定義
-			$t_db = $prefix . '_' . $y . '_' . $i . '.db';
+            $t_db = "${group}_${prefix}" . '_' . $y . '_' . $i . '.db';
 			
 			// DBが存在しない時は次へ
 			if(!$db->exists($t_db)){continue;}

@@ -76,11 +76,13 @@ class Logging
 		$id    = '';
 		$visit = 0;
 		
+		$group = (isset($_GET['storeseq'])) ? $_GET['storeseq'] : '';
+		
 		// 時差を取得
 		$gmt_diff = $fw['gmt_diff'];
 		
 		// マスターDB名を取得
-		$main_db = $fw['main_db'];
+		$main_db = "${group}_${fw['main_db']}";
 		
 		// テーブル名プレフィックスを取得
 		$prefix = $fw['prefix'];
@@ -104,7 +106,7 @@ class Logging
 		$domain = $conf['domain'];
 		
 		////////////////////////////////////////////////////////////
-		
+
 		// アクション名を取得
 		$act = (isset($_GET['act'])) ? $_GET['act'] : '';
 		
@@ -147,7 +149,7 @@ class Logging
 		$t_table = $prefix . '_total';
 		
 		// 月間DB名を定義
-		$monthly_db = $prefix . '_' . $y . '_' . $m . '.db';
+		$monthly_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 		
 		////////////////////////////////////////////////////////////
 		
@@ -168,7 +170,7 @@ class Logging
 		
 		// UAもチェックする時はwhere句に追記
 		if($ua_check){$where .= ' and ua = ' . $db->escape($ua);}
-		
+
 		// include以外の時
 		if($act)
 		{
@@ -370,14 +372,16 @@ class Logging
 				// 配列の最終indexを算出
 				$last_page_no = $cnt_ps - 1;
 				
-				// リロードの時は終了
-				if($page_no === $page_nos[$last_page_no]){return self::close($db,'rollback');}
-				
-				// ロボットかつ10PV以上の時は終了
-				elseif($ua_type === 'Robot' and $cnt_ps >= 10){return self::close($db,'rollback');}
-				
-				// PVが最大保存件数以上の時は終了
-				elseif($cnt_ps >= $page_route_limit){return self::close($db,'rollback');}
+				// リロードの時
+				// ロボットかつ10PV以上の時
+                // PVが最大保存件数以上の時
+                // は終了
+                if($page_no === $page_nos[$last_page_no]
+                    || $ua_type === 'Robot' and $cnt_ps >= 10
+                    || $cnt_ps >= $page_route_limit
+                ) {
+                    return self::close($db,'rollback');
+                }
 				
 				// ユニークPVが有効の時
 				elseif($unique_pv){while(list(,$page_no_u) = each($page_nos)){if($page_no === $page_no_u){return self::close($db,'rollback');}}}

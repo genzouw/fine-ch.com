@@ -24,7 +24,7 @@ class Counter
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$path;
+		global $obj,$args,$path,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db = $obj['db'];
@@ -89,7 +89,7 @@ class Counter
 			$l_table = $prefix . '_l_' . $y . '_' . $m;
 			
 			// 月間DB名を定義
-			$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+            $t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 			
 			// DBが存在しない時は終了
 			if(!$db->exists($t_db)){return;}

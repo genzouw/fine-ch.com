@@ -24,7 +24,7 @@ class Index
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$path,$conf;
+		global $obj,$args,$path,$conf,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -106,7 +106,7 @@ class Index
 		////////////////////////////////////////////////////////////
 		
 		// 月間DB名を定義
-		$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+		$t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 		
 		// 月間DBが存在する時
 		if($db->exists($t_db))
@@ -162,7 +162,7 @@ class Index
 			////////////////////////////////////////////////////////////
 			
 			// DB名を定義
-			$y_db = $prefix . '_' . $yy . '_' . $ym . '.db';
+            $y_db = "${group}_${prefix}" . '_' . $yy . '_' . $mm . '.db';
 			
 			// DBが存在する時
 			if($db->exists($y_db))

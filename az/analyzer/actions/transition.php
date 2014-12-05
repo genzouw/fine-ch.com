@@ -24,7 +24,7 @@ class Transition
 	{
 		
 		// グローバル変数を定義
-		global $obj,$path,$args;
+		global $obj,$path,$args,$group;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -206,7 +206,7 @@ class Transition
 			$i_table = $prefix . '_i_' . $y . '_' . $m;
 			
 			// DB名を定義
-			$t_db = $prefix . '_' . $y . '_' . $m . '.db';
+            $t_db = "${group}_${prefix}" . '_' . $y . '_' . $m . '.db';
 			
 			// 月<table>に追記
 			$table2 .= $t3 . "<td>$m</td>";
