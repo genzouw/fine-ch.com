@@ -11,7 +11,7 @@ class Header
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$path;
+		global $obj,$args,$path,$menu;
 		
 		// ワークディレクトリを取得
 		$work_dir = $path['work_dir'];
@@ -28,7 +28,7 @@ class Header
 
         $lang = array_shift(array_filter($langs, function ( $it ) {
             return in_array($it, array(
-                'ja', 'en', 'vi'
+                'ja', 'en', 'vn'
             ));
         }));
 			
@@ -40,9 +40,11 @@ class Header
 		// 変数を初期化
 		$v     = array();
 		$title = array();
-		$menu  = array();
 		$opt   = '';
 		
+        // メニューiniファイルを解析
+        $menu = parse_ini_file($work_dir . "/templates/ini/menu.${lang}.ini",true);
+			
 		// アクション名を取得
 		$act = $args['act'];
 		
@@ -80,9 +82,6 @@ class Header
 		elseif(preg_match('/param|pie_chart|transition|graph|page_data|^search|shortcut|detail$|diagram/',$act))
 		{
 
-			// メニューiniファイルを解析
-			$menu = parse_ini_file($work_dir . "/templates/ini/menu.${lang}.ini",true);
-			
 			// メソッド名を定義
 			$method = ($act === 'pie_chart' or $act === 'transition') ? 'param' : $act;
 			

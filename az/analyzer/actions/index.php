@@ -24,7 +24,7 @@ class Index
 	{
 		
 		// グローバル変数を定義
-		global $obj,$args,$path,$conf,$group;
+		global $obj,$args,$path,$conf,$group,$menu;
 		
 		// 汎用クラスインスタンスを取得
 		$db   = $obj['db'];
@@ -254,6 +254,10 @@ class Index
 		
 		////////////////////////////////////////////////////////////
 		
+        $v['total'] = $menu["access"]["total"];
+        $v['today'] = $menu["access"]["today"];
+        $v['yesterday'] = $menu["access"]["yesterday"];
+
 		// メインテンプレートを読み込み
 		list($header,$main,$footer) = $tmpl->read('index.htm');
 		
@@ -273,7 +277,7 @@ class Index
 		
 		// グラフ処理メソッド名を取得
 		$graph_type = ($line_chart) ? 'line' : 'bar';
-		
+
 		// グラフデータをテンプレート変数にセット
 		$v['graph_d'] = self::$graph_type($pixcel,$t_cnt,$y_cnt,$hh,$work_dir,$main);
 		
@@ -379,7 +383,7 @@ class Index
 			
 			// PVカウントが0の時
 			if(!$v['p_cnt']){echo $tab . '<td></td>';continue;}
-			
+
 			// メインテンプレートを出力
 			$obj['tmpl']->view($main,$v);
 			
