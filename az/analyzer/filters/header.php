@@ -20,8 +20,20 @@ class Header
 		$date = $obj['date'];
 		$tmpl = $obj['tmpl'];
 		
+        $httpAcceptLanguage = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'ja';
+
+        $langs = array_map(function ( $it ) {
+            return preg_replace('/;.*/u', '', $it);
+        }, explode(',', $httpAcceptLanguage));
+
+        $lang = array_shift(array_filter($langs, function ( $it ) {
+            return in_array($it, array(
+                'ja', 'en', 'vi'
+            ));
+        }));
+			
 		// タイトルiniファイルを解析
-		$title_d = parse_ini_file($work_dir . '/templates/ini/title.ini');
+		$title_d = parse_ini_file($work_dir . "/templates/ini/title.${lang}.ini");
 		
 		////////////////////////////////////////////////////////////
 		
@@ -42,6 +54,10 @@ class Header
 		
 		// タイトルを取得
 		$v['title'] = $title_d[$act];
+
+        foreach ($title_d as $pageName => $linkLabel) {
+            $v["link_label_${pageName}"] = $linkLabel;
+        }
 		
 		////////////////////////////////////////////////////////////
 		
@@ -63,9 +79,9 @@ class Header
 		// 日付及びナビリンクが必要な時
 		elseif(preg_match('/param|pie_chart|transition|graph|page_data|^search|shortcut|detail$|diagram/',$act))
 		{
-			
+
 			// メニューiniファイルを解析
-			$menu = parse_ini_file($work_dir . '/templates/ini/menu.ini',true);
+			$menu = parse_ini_file($work_dir . "/templates/ini/menu.${lang}.ini",true);
 			
 			// メソッド名を定義
 			$method = ($act === 'pie_chart' or $act === 'transition') ? 'param' : $act;

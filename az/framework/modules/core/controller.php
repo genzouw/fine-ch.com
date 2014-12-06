@@ -13,7 +13,7 @@ class Controller
 		global $obj,$args,$path,$conf,$userInfo,$group;
 
         parse_str($_COOKIE['ls_login'], $userInfo);
-        $group = self::findGroup($userInfo['user'], $userInfo['group'], $work_dir);
+        $group = isset($userInfo['user']) && isset($userInfo['group']) ? self::findGroup($userInfo['user'], $userInfo['group'], $work_dir) : '';
 		
 		// 変数を初期化
 		$obj   = array();

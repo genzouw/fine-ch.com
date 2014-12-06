@@ -15,9 +15,6 @@ class login
         $pass = '';
         $group = '';
 
-        // TODO 
-        $_POST['group'] = 'root_group';
-
         // フォームデータが存在する時
         if (isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['group'])) {
 
