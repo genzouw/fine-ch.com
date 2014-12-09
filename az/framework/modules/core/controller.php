@@ -242,8 +242,9 @@ class Controller
         // ファイルデータを読み取る
         foreach ($group_d as $key => $val) {
 
-            $userPart = explode(':', $key)[0];
-            $passPart = explode(':', $key)[1];
+            $keyParts = explode(':', $key);
+            $userPart = array_shift($keyParts);
+            $passPart = array_shift($keyParts);
 
             // ユーザー名とグループが一致した場合はtrueを返す
             if ($user === md5($userPart) && $pass === md5($passPart)) {
