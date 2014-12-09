@@ -13,7 +13,7 @@ class Controller
 		global $obj,$args,$path,$conf,$userInfo,$group;
 
         parse_str($_COOKIE['ls_login'], $userInfo);
-        $group = isset($userInfo['user']) && isset($userInfo['group']) ? self::findGroup($userInfo['user'], $userInfo['group'], $work_dir) : '';
+        $group = isset($userInfo['user']) && isset($userInfo['group']) ? self::findGroup($userInfo['user'], $userInfo['pass'], $work_dir) : '';
 		
 		// 変数を初期化
 		$obj   = array();
@@ -228,7 +228,7 @@ class Controller
 		
 	}
 	
-    public static function findGroup($user,$group,$work_dir)
+    public static function findGroup($user,$pass,$work_dir)
     {
         // iniファイル名を定義
         $group_ini = $work_dir . '/configs/group.ini';
@@ -242,20 +242,17 @@ class Controller
         // ファイルデータを読み取る
         foreach ($group_d as $key => $val) {
 
+            $userPart = explode(':', $key)[0];
+            $passPart = explode(':', $key)[1];
+
             // ユーザー名とグループが一致した場合はtrueを返す
-            if ($user === md5($key)) {
-                $findGroup = array_pop(array_filter(explode(',', $val), function ($it) use ($group) {
-                    return $group == md5($it);
-                }));
-
-                return $findGroup;
+            if ($user === md5($userPart) && $pass === md5($passPart)) {
+                return $val;
             }
-
         }
 
         return '';
 
     }
-
 }
 

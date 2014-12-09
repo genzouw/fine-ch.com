@@ -13,20 +13,15 @@ class login
         // 変数を初期化
         $user = '';
         $pass = '';
-        $group = '';
 
         // フォームデータが存在する時
-        if (isset($_POST['user']) && isset($_POST['pass']) && isset($_POST['group'])) {
+        if (isset($_POST['user']) && isset($_POST['pass'])) {
 
             // userを取得
             $user = md5($_POST['user']);
 
             // パスワードを取得
             $pass = md5($_POST['pass']);
-
-            // groupを取得
-            $group = md5($_POST['group']);
-
         }
 
         // Cookieが存在する時は変数に展開
@@ -34,7 +29,7 @@ class login
 
         // ユーザーとパスワードをチェック。NGの時はログインフォームを表示
         // ユーザーとグループをチェック。NGの時はログインフォームを表示
-        if (!self::pass_check($user,$pass,$work_dir) || !self::group_check($user,$group,$work_dir)) {
+        if (!self::pass_check($user,$pass,$work_dir) || !self::group_check($user,$pass,$work_dir)) {
             exit(self::login_form($tmpl_dir));
         }
 
@@ -94,14 +89,14 @@ class login
     //---------------------------------------------------------
     //	groupチェック
     //---------------------------------------------------------
-    public static function group_check($user,$group,$work_dir)
+    public static function group_check($user,$pass,$work_dir)
     {
-        $findGroup = self::findGroup($user, $group, $work_dir);
+        $findGroup = self::findGroup($user, $pass, $work_dir);
 
         return !is_null($findGroup) && !empty($findGroup);
     }
 
-    public static function findGroup($user,$group,$work_dir)
+    public static function findGroup($user,$pass,$work_dir)
     {
         // iniファイル名を定義
         $group_ini = $work_dir . '/configs/group.ini';
@@ -115,15 +110,13 @@ class login
         // ファイルデータを読み取る
         foreach ($group_d as $key => $val) {
 
+            $userPart = explode(':', $key)[0];
+            $passPart = explode(':', $key)[1];
+
             // ユーザー名とグループが一致した場合はtrueを返す
-            if ($user === md5($key)) {
-                $findGroup = array_pop(array_filter(explode(',', $val), function ($it) use ($group) {
-                    return $group == md5($it);
-                }));
-
-                return $findGroup;
+            if ($user === md5($userPart) && $pass === md5($passPart)) {
+                return $val;
             }
-
         }
 
         return '';
