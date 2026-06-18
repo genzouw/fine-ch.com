@@ -1,14 +1,16 @@
 # CodeRabbit configuration
 # https://docs.coderabbit.ai/reference/configuration
 
-language: 'ja-JP'
+language: "ja-JP"
 early_access: false
 enable_free_tier: true
 
 reviews:
+  planning:
+    enabled: true
   # 公開 Web サイトのソースを管理する PHP リポジトリのため、入力経路の検証漏れや XSS / SQL インジェクションを取りこぼしたくない。
   # "assertive" で検出感度を高めに保ち、ノイズが過剰になった場合は "chill" に戻すことも検討する。
-  profile: 'assertive'
+  profile: "assertive"
 
   # PR 全体に対する指針。path_instructions に "**/*" を入れるとファイル毎に
   # 繰り返し適用されてノイズが増えるため、広範な指示は instructions に集約する。
@@ -37,14 +39,14 @@ reviews:
       - main
 
   path_instructions:
-    - path: '**/*.php'
+    - path: "**/*.php"
       instructions: |
         PHP コードとしてレビューしてください:
         - 外部入力を SQL に直接連結していないか (プリペアド・パラメータ化が徹底されているか)。
         - `echo` / テンプレート出力でエスケープ漏れ (XSS) が無いか。
         - `include` / `require` のパスに外部入力が混入していないか (LFI)。
         - ファイルアップロード処理のバリデーション (拡張子・MIME・サイズ) が抜けていないか。
-    - path: '.github/workflows/**'
+    - path: ".github/workflows/**"
       instructions: |
         GitHub Actions ワークフローとしてレビューしてください:
         - シークレットの露出 (echo / set-output 経由のリーク) が無いか。
@@ -53,24 +55,24 @@ reviews:
 
   # 生成物 / 依存物 / ロックファイルなどはレビュー対象から除外する。
   path_filters:
-    - '!**/dist/**'
-    - '!**/build/**'
-    - '!**/coverage/**'
-    - '!**/node_modules/**'
-    - '!**/.wrangler/**'
-    - '!**/.turbo/**'
-    - '!**/.next/**'
-    - '!infra/cdktf.out/**'
-    - '!infra/.gen/**'
-    - '!**/bun.lock'
-    - '!**/package-lock.json'
-    - '!**/yarn.lock'
-    - '!**/pnpm-lock.yaml'
-    - '!**/*.min.js'
-    - '!**/*.min.css'
-    - '!**/*.map'
-    - '!**/*.snap'
-    - '!**/*.tsbuildinfo'
+    - "!**/dist/**"
+    - "!**/build/**"
+    - "!**/coverage/**"
+    - "!**/node_modules/**"
+    - "!**/.wrangler/**"
+    - "!**/.turbo/**"
+    - "!**/.next/**"
+    - "!infra/cdktf.out/**"
+    - "!infra/.gen/**"
+    - "!**/bun.lock"
+    - "!**/package-lock.json"
+    - "!**/yarn.lock"
+    - "!**/pnpm-lock.yaml"
+    - "!**/*.min.js"
+    - "!**/*.min.css"
+    - "!**/*.map"
+    - "!**/*.snap"
+    - "!**/*.tsbuildinfo"
 
   abort_on_close: true
 
@@ -78,4 +80,8 @@ chat:
   auto_reply: true
 
 knowledge_base:
+  web_search: true
   opt_out: false
+
+issue_enrichment:
+  auto_enrich: true
