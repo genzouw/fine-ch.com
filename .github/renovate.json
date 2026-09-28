@@ -8,7 +8,6 @@
   "semanticCommitScope": "deps",
   "timezone": "Asia/Tokyo",
   "minimumReleaseAge": "1 day",
-  "minimumReleaseAgeBehaviour": "timestamp-optional",
   "prConcurrentLimit": 5,
   "labels": [
     "dependencies"
